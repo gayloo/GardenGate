@@ -1,0 +1,35 @@
+name: Build launcher on Windows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Launcher on Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install .NET SDK via Chocolatey
+        shell: pwsh
+        run: |
+          choco install dotnet-9.0-sdk -y
+
+      - name: Restore NuGet Packages
+        run: |
+          cd Launcher
+          dotnet restore Launcher.slnx
+
+      - name: Build
+        run: |
+          cd Launcher
+          dotnet build Launcher.slnx -c Release
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release
+          path: |
+            Launcher/bin
