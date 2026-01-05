@@ -3,11 +3,17 @@
 ### Is this an official Garden warfare 1 server?
 No, this is a private server project created for educational and experimental purposes. It is not affiliated with or endorsed by EA.
 
+### Does this make gw2 work with wine again?
+Yes it should. Please [see this](./LINUX.md)
+
 ### Does this work on console?
 No it doesn't.
 
 ### I'm having issue X is this known?
 Check if it's been added to the what's not done part of [README.md](../README.md)
+
+### Do I need every mod the server I'm joining has?
+For small client sided mods like FOV changer not really, but big mods like project visionary will make it crash if you don't have them installed.
 
 ### How do I contribute?
 1. Fork the repository.

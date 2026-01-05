@@ -6,18 +6,21 @@
 ### Garden warfare 1
 [UnlockAll](../Mods/GW1/UnlockAll.fbmod)
 
-### Garden warfare 2 [(PLEASE DOWNGRADE YOUR GAME FIRST)](./gw2_downgrade.md)
+### Garden warfare 2 [(PLEASE DOWNGRADE YOUR GAME FIRST)](./GW2_DOWNGRADE.md)
 
-### Install the following mods in their respective order;
+[GardenGate.fbpack](../Mods/GW2/GardenGate.fbpack)
 
-[Private Play](../Mods/GW2/PrivatePlayRemastered.fbmod) (Dark Damona,brekko)
+Import the FBPack in Frosty Mod Manager, the load order should be something like this;
 
-[Offline mode](../Mods/GW2/OfflineModeLatestCompatible.fbmod) (brekko)
-
-[AIHax](../Mods/GW2/AIHax.fbmod) (Nam)
-
-[UpgradesUnlocker](../Mods/GW2/UpgradesUnlocker.fbmod)
-
-<img src="./Assets/mod_load_order.webp" />
+<img src="./Assets/load_order.webp" />
 
 3. Join with the launcher
+
+### Mod Credits ###
+Private Play (Dark Damona,brekko)
+
+Private Play Extension (Dark Damona,brekko)
+
+Offline mode + Fixes (brekko, modified)
+
+AIHax (Nam)

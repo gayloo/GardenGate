@@ -14,9 +14,11 @@ Experimental private servers for Plants vs. Zombies Garden Warfare 1 & 2
 
 ### What's not done (TODO):
 * Fix rare crashes caused by; lnck
-* Server passwords
 * Player kicking/moderation
-* [Fix player getting stuck in gw2 infinity of time thing](https://cdn.discordapp.com/attachments/1425183663691268200/1457789530290655305/image.png?ex=695d47cc&is=695bf64c&hm=18a08fa0a88854fbf5fbf337f9158257d8ea318a07f1629b116f4f2c27774f39&)
+* Integrate patcher to launcher for gw2
+* Fix trials of gnomus
+* Remove [annoying pop-ups](./Assets/pop-up_example.webp)
+* Fix return to backyard button
 
 ### [Discord server](https://discord.gg/sEs9NcUrF9)
 
