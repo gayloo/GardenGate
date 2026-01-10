@@ -15,7 +15,7 @@ jobs:
       - name: Install .NET SDK via Chocolatey
         shell: pwsh
         run: |
-          choco install dotnet-8.0-sdk -y
+          choco install dotnet-sdk -y
 
       - name: Restore NuGet Packages
         run: |
