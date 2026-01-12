@@ -1,6 +1,6 @@
 # Downgrading Garden Warfare 2's executable
 
-1. Download [xdelta patcher](https://github.com/marco-calautti/DeltaPatcher/releases) & the [xdelta patch for pre EA AC](../Launcher/GW2_NO_EAAC.xdelta)
+1. Download [xdelta patcher](https://github.com/marco-calautti/DeltaPatcher/releases) & the [xdelta patch for pre EA AC](../Launcher/patches/gw2_patch.xdelta)
 
 2. Open xdelta patcher, select your game's executable as the original file and select the xdelta patch
 
