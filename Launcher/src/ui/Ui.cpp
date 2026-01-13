@@ -6,9 +6,32 @@
 #include <windows.h>
 #include <filesystem>
 #include <string>
+#include <chrono>
 
 extern Config g_config;
 namespace fs = std::filesystem;
+
+struct StatusMessage {
+	std::string text;
+	bool isError;
+	std::chrono::steady_clock::time_point showTime;
+	float duration;
+
+	StatusMessage(const std::string& t = "", bool error = false, float dur = 3.0f)
+		: text(t), isError(error), showTime(std::chrono::steady_clock::now()), duration(dur) {
+	}
+
+	bool isExpired() const {
+		auto elapsed = std::chrono::steady_clock::now() - showTime;
+		return std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() > duration * 1000;
+	}
+};
+
+static StatusMessage currentStatus;
+
+static void showStatus(const std::string& text, bool isError = false, float duration = 3.0f) {
+	currentStatus = StatusMessage(text, isError, duration);
+}
 
 static void setupStyle(float dpiScale) {
 	ImGuiStyle& style = ImGui::GetStyle();
@@ -25,6 +48,9 @@ static void setupStyle(float dpiScale) {
 	style.Colors[ImGuiCol_CheckMark] = baseGreen;
 	style.Colors[ImGuiCol_FrameBgActive] = activeGreen;
 	style.Colors[ImGuiCol_FrameBgHovered] = hoverGreen;
+	style.Colors[ImGuiCol_Header] = baseGreen;
+	style.Colors[ImGuiCol_HeaderHovered] = hoverGreen;
+	style.Colors[ImGuiCol_HeaderActive] = activeGreen;
 	style.Colors[ImGuiCol_Text] = ImVec4(1, 1, 1, 1);
 
 	style.WindowPadding = ImVec2(16 * dpiScale, 10 * dpiScale);
@@ -39,7 +65,7 @@ static void drawTitleBar(HWND hwnd, float dpiScale) {
 	ImGui::BeginChild("TitleBar", ImVec2(0, h), false);
 
 	ImGui::SetCursorPos(ImVec2(15 * dpiScale, (h - ImGui::GetFontSize() * 1.2f) * 0.5f));
-	ImGui::TextUnformatted("GARDEN GATE LAUNCHER");
+	ImGui::TextUnformatted("GARDENGATE LAUNCHER");
 
 	float btnW = 40 * dpiScale, btnH = 26 * dpiScale, spacing = 12 * dpiScale, rightPad = 10 * dpiScale;
 	float yOffset = (h - btnH) * 0.5f;
@@ -61,7 +87,6 @@ static void drawTitleBar(HWND hwnd, float dpiScale) {
 }
 
 static void drawTabBar(int& currentTab, float dpiScale) {
-
 	ImVec4 colorBaseGreen = ImVec4(0.25f, 0.47f, 0.32f, 1.0f);
 
 	ImGui::BeginChild("TabBar", ImVec2(0, 45.0f * dpiScale), false,
@@ -89,12 +114,46 @@ static void drawTabBar(int& currentTab, float dpiScale) {
 	ImGui::EndChild();
 }
 
-static void drawLauncherTab(HWND hwnd, float dpiScale, Utils::UI::Status& status) {
+static void drawStatusMessage(float dpiScale) {
+	if (currentStatus.text.empty() || currentStatus.isExpired()) {
+		return;
+	}
+
+	float safeWidth = ImGui::GetContentRegionAvail().x;
+	float centerOffset = (safeWidth - 400 * dpiScale) / 2.0f;
+
+	ImGui::Dummy(ImVec2(0, 10 * dpiScale));
+
+	auto elapsed = std::chrono::steady_clock::now() - currentStatus.showTime;
+	float elapsedSec = std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() / 1000.0f;
+	float alpha = 1.0f;
+
+	if (elapsedSec > currentStatus.duration - 0.5f) {
+		alpha = (currentStatus.duration - elapsedSec) * 2.0f;
+	}
+
+	ImVec4 textColor = currentStatus.isError ?
+		ImVec4(1.0f, 0.4f, 0.4f, alpha) :
+		ImVec4(0.4f, 1.0f, 0.4f, alpha);
+
+	ImGui::SetCursorPosX(centerOffset);
+	ImGui::PushStyleColor(ImGuiCol_Text, textColor);
+
+	float textWidth = ImGui::CalcTextSize(currentStatus.text.c_str()).x;
+	float padding = (400 * dpiScale - textWidth) / 2.0f;
+
+	ImGui::SetCursorPosX(centerOffset + padding);
+	ImGui::Text("%s", currentStatus.text.c_str());
+	ImGui::PopStyleColor();
+}
+static void drawLauncherTab(HWND hwnd, float dpiScale) {
 	float safeWidth = ImGui::GetContentRegionAvail().x;
 	float fieldWidth = safeWidth * 0.85f;
 	float centerOffset = (safeWidth - fieldWidth) / 2.0f;
 
-	int gameSelectedInt = g_config.get_game_selected_int();
+	int  gameSelectedInt = g_config.get_game_selected_int();
+	bool isGW1 = (gameSelectedInt == 0);
+
 	ImGui::SetCursorPosX(centerOffset);
 	if (ImGui::RadioButton("GW1", &gameSelectedInt, 0)) g_config.set_game_selected_from_int(0);
 	ImGui::SameLine(0.0f, 40 * dpiScale);
@@ -118,159 +177,334 @@ static void drawLauncherTab(HWND hwnd, float dpiScale, Utils::UI::Status& status
 	ImGui::SameLine();
 	if (ImGui::Button("Auto-Detect", ImVec2(100 * dpiScale, 0))) {
 		std::string detected = Utils::Registry::GetGamePathFromRegistry(gameSelectedInt == 1);
-		if (!detected.empty()) { currentGame.game_path = detected; status.Show("Auto-detected: " + detected); }
-		else status.Show("Could not auto-detect game path", true);
+		if (!detected.empty()) {
+			currentGame.game_path = detected;
+			showStatus("Auto-detected game path: " + detected);
+		}
+		else {
+			showStatus("Could not auto-detect game installation", true);
+		}
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Browse", ImVec2(80 * dpiScale, 0))) {
 		std::string chosen = Utils::Dialog::BrowseForExe(hwnd, gameSelectedInt == 1);
-		if (!chosen.empty()) currentGame.game_path = chosen;
+		if (!chosen.empty()) {
+			currentGame.game_path = chosen;
+			showStatus("Game path set: " + chosen);
+		}
+	}
+
+	ImGui::Dummy(ImVec2(0, 10 * dpiScale));
+	ImGui::SetCursorPosX(centerOffset);
+	if (ImGui::Checkbox("Use ModData", &currentGame.moddata_enabled)) {
+		save_config(g_config, "config.json");
+	}
+
+	if (currentGame.moddata_enabled) {
+		std::vector<std::string> modFolders = { "Default" };
+		if (!currentGame.game_path.empty()) {
+			fs::path gamePath = fs::path(currentGame.game_path);
+			if (fs::exists(gamePath)) {
+				fs::path modDataDir = gamePath.parent_path() / "ModData";
+				if (fs::exists(modDataDir) && fs::is_directory(modDataDir)) {
+					for (const auto& entry : fs::directory_iterator(modDataDir)) {
+						if (entry.is_directory()) {
+							std::string folderName = entry.path().filename().string();
+							if (folderName != "Default") modFolders.push_back(folderName);
+						}
+					}
+				}
+				else {
+					showStatus("ModData folder not found at: " + modDataDir.string(), true);
+				}
+			}
+		}
+
+		ImGui::SetCursorPosX(centerOffset);
+		ImGui::TextUnformatted("ModData Preset:");
+		ImGui::SetCursorPosX(centerOffset);
+		ImGui::SetNextItemWidth(fieldWidth);
+
+		std::vector<const char*> modCStrings;
+		modCStrings.reserve(modFolders.size());
+		for (const auto& mod : modFolders) modCStrings.push_back(mod.c_str());
+
+		int currentSelection = 0;
+		for (size_t i = 0; i < modFolders.size(); ++i) {
+			if (modFolders[i] == currentGame.moddata_selected) { currentSelection = (int)i; break; }
+		}
+
+		if (ImGui::Combo("##ModDataPreset", &currentSelection, modCStrings.data(), (int)modCStrings.size())) {
+			currentGame.moddata_selected = modFolders[currentSelection];
+			save_config(g_config, "config.json");
+			showStatus("ModData preset set to: " + currentGame.moddata_selected);
+		}
 	}
 
 	Utils::UI::CenteredInput("Custom Arguments:", currentGame.custom_args, centerOffset, fieldWidth);
 
+	std::vector<std::string> argList;
+	if (!currentGame.custom_args.empty()) argList.push_back(currentGame.custom_args);
+	if (!g_config.username.empty())       argList.push_back("-name " + g_config.username);
+	if (!g_config.server_ip.empty())      argList.push_back("-Client.ServerIp " + g_config.server_ip);
+	if (!g_config.password.empty())       argList.push_back("-Server.ServerPassword " + g_config.password);
+	if (currentGame.moddata_enabled && !currentGame.moddata_selected.empty()) {
+		std::string dataPathVal = "ModData/" + currentGame.moddata_selected;
+		if (dataPathVal.find(' ') != std::string::npos) dataPathVal = "\"" + dataPathVal + "\"";
+		argList.push_back("-dataPath " + dataPathVal);
+	}
+
+	std::string args;
+	for (size_t i = 0; i < argList.size(); ++i) {
+		if (i) args += ' ';
+		args += argList[i];
+	}
+
 	ImGui::Dummy(ImVec2(0, 12 * dpiScale));
 	if (Utils::UI::CenteredButton("LAUNCH GAME", 180 * dpiScale, dpiScale)) {
-		std::string args;
-		if (!currentGame.custom_args.empty()) args += currentGame.custom_args + " ";
-		if (!g_config.username.empty()) args += "-name " + g_config.username + " ";
-		if (!g_config.server_ip.empty()) args += "-Client.ServerIp " + g_config.server_ip + " ";
-		if (!g_config.password.empty()) args += "-Server.ServerPassword " + g_config.password + " ";
-		if (currentGame.moddata_enabled && currentGame.moddata_selected != "Default") {
-			args += "-dataPath ModData/" + currentGame.moddata_selected + " ";
-		}
-		if (!args.empty() && args.back() == ' ') args.pop_back();
-
 		save_config(g_config, "config.json");
 
-		std::string errorMsg;
-		if (Utils::Process::LaunchGame(currentGame.game_path, args, hwnd, errorMsg)) {
-			status.Show("Game launched successfully!");
+		if (currentGame.game_path.empty()) {
+			showStatus("Please set a game path first!", true);
 		}
 		else {
-			status.Show(errorMsg, true);
+			auto lr = Utils::Process::LaunchAndInject(currentGame.game_path, args, isGW1);
+
+			if (!lr.ok) {
+				showStatus("Failed to launch: " + lr.error, true);
+			}
+			else {
+				showStatus("Launching game...\nArgs: " + args);
+				CloseHandle(lr.pi.hProcess);
+				CloseHandle(lr.pi.hThread);
+			}
 		}
 	}
+
+	drawStatusMessage(dpiScale);
 }
 
-static void drawPatcherTab(HWND hwnd, float dpiScale, Utils::UI::Status& status) {
+static void drawPatcherTab(HWND hwnd, float dpiScale) {
 	float safeWidth = ImGui::GetContentRegionAvail().x;
 	float fieldWidth = safeWidth * 0.85f;
 	float centerOffset = (safeWidth - fieldWidth) / 2.0f;
-	float browseBtnW = 80.0f * dpiScale;
 
-	auto& gw2Config = g_config.gw2;
-	bool isPatched = !gw2Config.game_path.empty() && Patcher::IsGW2Patched(gw2Config.game_path);
+	int gameSelectedInt = g_config.get_game_selected_int();
 
-	ImGui::SetCursorPosX(centerOffset);
-	ImGui::TextUnformatted("GW2 Executable:");
-	ImGui::SetCursorPosX(centerOffset);
-	ImGui::SetNextItemWidth(fieldWidth - browseBtnW - 120 * dpiScale);
+	if (gameSelectedInt == 0) {
+		auto& gw1Config = g_config.gw1;
 
-	char buf[512];
-	strncpy_s(buf, gw2Config.game_path.c_str(), sizeof(buf));
-	if (ImGui::InputText("##ExePath", buf, sizeof(buf))) {
-		gw2Config.game_path = buf;
-		save_config(g_config, "config.json");
-		if (!gw2Config.game_path.empty()) isPatched = Patcher::IsGW2Patched(gw2Config.game_path);
-	}
-
-	ImGui::SameLine();
-	if (ImGui::Button("Auto Detect", ImVec2(120 * dpiScale, 0))) {
-		std::string detected = Utils::Registry::GetGamePathFromRegistry(true);
-		if (!detected.empty()) {
-			gw2Config.game_path = detected;
-			save_config(g_config, "config.json");
-			status.Show("autodetected GW2 path: " + detected);
-			isPatched = Patcher::IsGW2Patched(gw2Config.game_path);
-		}
-		else status.Show("Could not autodetect GW2 installation", true);
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("Browse", ImVec2(browseBtnW, 0))) {
-		std::string chosen = Utils::Dialog::BrowseForExe(hwnd, true);
-		if (!chosen.empty()) {
-			gw2Config.game_path = chosen;
-			save_config(g_config, "config.json");
-			isPatched = Patcher::IsGW2Patched(gw2Config.game_path);
-		}
-	}
-
-	ImGui::Dummy(ImVec2(0, 20 * dpiScale));
-	fs::path launcherDir = fs::path([] {
-		char path[MAX_PATH]; GetModuleFileNameA(NULL, path, MAX_PATH); return std::string(path);
-		}()).parent_path();
-	std::string patchFile = (launcherDir / "gw2_patch.xdelta").string();
-	std::string dllFile = (launcherDir / "dinput8.dll").string();
-	bool hasPatch = fs::exists(patchFile), hasDLL = fs::exists(dllFile);
-
-	if (!hasPatch || !hasDLL) {
 		ImGui::SetCursorPosX(centerOffset);
-		ImGui::TextColored(ImVec4(1, 0.5f, 0, 1), "Missing required files:");
-		if (!hasPatch) { ImGui::SetCursorPosX(centerOffset); ImGui::Text("- gw2_patch.xdelta"); }
-		if (!hasDLL) { ImGui::SetCursorPosX(centerOffset); ImGui::Text("- dinput8.dll"); }
-	}
-
-	if (isPatched) {
+		ImGui::TextUnformatted("GW1 Executable:");
 		ImGui::SetCursorPosX(centerOffset);
-		ImGui::TextColored(ImVec4(0, 1, 0, 1), "GW2 is already patched");
-		float btnW = 200 * dpiScale, btnH = 40 * dpiScale;
-		ImGui::SetCursorPosX((safeWidth - btnW) / 2.0f);
-		if (ImGui::Button("RESTORE ORIGINAL GW2", ImVec2(btnW, btnH))) {
-			std::string err;
-			if (Patcher::RestoreGW2(gw2Config.game_path, err)) {
-				status.Show("GW2 restored to original!");
-				isPatched = false;
+		ImGui::SetNextItemWidth(fieldWidth - 180 * dpiScale);
+
+		char buf[512];
+		strncpy_s(buf, gw1Config.game_path.c_str(), sizeof(buf));
+		if (ImGui::InputText("##GW1ExePath", buf, sizeof(buf))) {
+			gw1Config.game_path = buf;
+			save_config(g_config, "config.json");
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("Auto-Detect", ImVec2(100 * dpiScale, 0))) {
+			std::string detected = Utils::Registry::GetGamePathFromRegistry(false);
+			if (!detected.empty()) {
+				gw1Config.game_path = detected;
+				save_config(g_config, "config.json");
+				showStatus("Auto-detected GW1 path: " + detected);
 			}
-			else status.Show("Restore failed: " + err, true);
+			else {
+				showStatus("Could not auto-detect GW1 installation", true);
+			}
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Browse", ImVec2(80 * dpiScale, 0))) {
+			std::string chosen = Utils::Dialog::BrowseForExe(hwnd, false);
+			if (!chosen.empty()) {
+				gw1Config.game_path = chosen;
+				save_config(g_config, "config.json");
+				showStatus("GW1 path set: " + chosen);
+			}
+		}
+
+		ImGui::Dummy(ImVec2(0, 20 * dpiScale));
+
+		if (!gw1Config.game_path.empty() && fs::exists(gw1Config.game_path)) {
+			fs::path gameDir = fs::path(gw1Config.game_path).parent_path();
+			fs::path dllPath = gameDir / "dinput8.dll";
+			fs::path dllDisabled = gameDir / "dinput8.dll.disabled";
+
+			if (fs::exists(dllPath)) {
+				if (Utils::UI::CenteredButton("DISABLE GARDEN GATE", 200 * dpiScale, dpiScale)) {
+					std::string err;
+					if (Utils::FileUtil::move_replace(dllPath.string(), dllDisabled.string(), err)) {
+						showStatus("Garden Gate disabled for GW1");
+					}
+					else {
+						showStatus("Error: " + err, true);
+					}
+				}
+			}
+			else if (fs::exists(dllDisabled)) {
+				if (Utils::UI::CenteredButton("ENABLE GARDEN GATE", 200 * dpiScale, dpiScale)) {
+					std::string err;
+					if (Utils::FileUtil::move_replace(dllDisabled.string(), dllPath.string(), err)) {
+						showStatus("Garden Gate enabled for GW1");
+					}
+					else {
+						showStatus("Error: " + err, true);
+					}
+				}
+			}
+			else {
+				if (Utils::UI::CenteredButton("INSTALL GARDEN GATE", 200 * dpiScale, dpiScale)) {
+					fs::path launcherDir = fs::path([] {
+						char path[MAX_PATH];
+						GetModuleFileNameA(NULL, path, MAX_PATH);
+						return std::string(path);
+						}()).parent_path();
+					fs::path dllSource = launcherDir / "dinput8.dll";
+					std::string err;
+					if (Utils::FileUtil::copy(dllSource.string(), dllPath.string(), err)) {
+						showStatus("Garden Gate installed for GW1");
+					}
+					else {
+						showStatus("Error: " + err, true);
+					}
+				}
+			}
+		}
+		else {
+			ImGui::SetCursorPosX(centerOffset);
+			ImGui::TextColored(ImVec4(1, 0.5f, 0, 1), "Set GW1 path first!");
 		}
 	}
 	else {
+		auto& gw2Config = g_config.gw2;
+		bool isPatched = !gw2Config.game_path.empty() && Patcher::IsGW2Patched(gw2Config.game_path);
+
 		ImGui::SetCursorPosX(centerOffset);
-		ImGui::Text("GW2 DOWNGRADER");
-		float btnW = 200 * dpiScale, btnH = 40 * dpiScale;
-		ImGui::SetCursorPosX((safeWidth - btnW) / 2.0f);
-		ImGui::BeginDisabled(!hasPatch || !hasDLL || gw2Config.game_path.empty());
-		if (ImGui::Button("PATCH GW2", ImVec2(btnW, btnH))) {
-			std::string err;
-			if (Patcher::AutoPatchGW2(gw2Config.game_path, patchFile, dllFile, err)) {
-				status.Show("Auto patch successful!");
-				isPatched = true;
-			}
-			else status.Show("Auto patch failed: " + err, true);
+		ImGui::TextUnformatted("GW2 Executable:");
+		ImGui::SetCursorPosX(centerOffset);
+		ImGui::SetNextItemWidth(fieldWidth - 180 * dpiScale);
+
+		char buf[512];
+		strncpy_s(buf, gw2Config.game_path.c_str(), sizeof(buf));
+		if (ImGui::InputText("##GW2ExePath", buf, sizeof(buf))) {
+			gw2Config.game_path = buf;
+			save_config(g_config, "config.json");
+			if (!gw2Config.game_path.empty()) isPatched = Patcher::IsGW2Patched(gw2Config.game_path);
 		}
-		ImGui::EndDisabled();
+
+		ImGui::SameLine();
+		if (ImGui::Button("Auto-Detect", ImVec2(100 * dpiScale, 0))) {
+			std::string detected = Utils::Registry::GetGamePathFromRegistry(true);
+			if (!detected.empty()) {
+				gw2Config.game_path = detected;
+				save_config(g_config, "config.json");
+				showStatus("Auto-detected GW2 path: " + detected);
+				isPatched = Patcher::IsGW2Patched(gw2Config.game_path);
+			}
+			else {
+				showStatus("Could not auto-detect GW2 installation", true);
+			}
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Browse", ImVec2(80 * dpiScale, 0))) {
+			std::string chosen = Utils::Dialog::BrowseForExe(hwnd, true);
+			if (!chosen.empty()) {
+				gw2Config.game_path = chosen;
+				save_config(g_config, "config.json");
+				showStatus("GW2 path set: " + chosen);
+				isPatched = Patcher::IsGW2Patched(gw2Config.game_path);
+			}
+		}
+
+		ImGui::Dummy(ImVec2(0, 20 * dpiScale));
+		fs::path launcherDir = fs::path([] {
+			char path[MAX_PATH];
+			GetModuleFileNameA(NULL, path, MAX_PATH);
+			return std::string(path);
+			}()).parent_path();
+
+		std::string patchFile = (launcherDir / "gw2_patch.xdelta").string();
+		std::string dllFile = (launcherDir / "dinput8.dll").string();
+		bool hasPatch = fs::exists(patchFile), hasDLL = fs::exists(dllFile);
+
+		if (!hasPatch || !hasDLL) {
+			ImGui::SetCursorPosX(centerOffset);
+			ImGui::TextColored(ImVec4(1, 0.5f, 0, 1), "Missing required files:");
+			if (!hasPatch) {
+				ImGui::SetCursorPosX(centerOffset);
+				ImGui::Text("- gw2_patch.xdelta");
+			}
+			if (!hasDLL) {
+				ImGui::SetCursorPosX(centerOffset);
+				ImGui::Text("- dinput8.dll");
+			}
+		}
+
+		if (isPatched) {
+			ImGui::SetCursorPosX(centerOffset);
+			ImGui::TextColored(ImVec4(0, 1, 0, 1), "GW2 is already patched");
+			if (Utils::UI::CenteredButton("RESTORE ORIGINAL GW2", 200 * dpiScale, dpiScale)) {
+				std::string err;
+				if (Patcher::RestoreGW2(gw2Config.game_path, err)) {
+					isPatched = false;
+					showStatus("GW2 restored to original");
+				}
+				else {
+					showStatus("Error: " + err, true);
+				}
+			}
+		}
+		else {
+			ImGui::SetCursorPosX(centerOffset);
+			ImGui::Text("One click patch for Garden Warfare 2");
+			ImGui::BeginDisabled(!hasPatch || !hasDLL || gw2Config.game_path.empty());
+			if (Utils::UI::CenteredButton("AUTO PATCH GW2", 200 * dpiScale, dpiScale)) {
+				std::string err;
+				if (Patcher::AutoPatchGW2(gw2Config.game_path, patchFile, dllFile, err)) {
+					isPatched = true;
+					showStatus("GW2 patched successfully!");
+				}
+				else {
+					showStatus("Error: " + err, true);
+				}
+			}
+			ImGui::EndDisabled();
+		}
 	}
+
+	drawStatusMessage(dpiScale);
 }
 
 void UI::DrawUI(HWND hwnd, float dpiScale) {
 	static int currentTab = 0;
-	static Utils::UI::Status status;
 
 	setupStyle(dpiScale);
 
-	RECT rc; GetClientRect(hwnd, &rc);
+	RECT rc;
+	GetClientRect(hwnd, &rc);
 	ImVec2 size((float)(rc.right - rc.left), (float)(rc.bottom - rc.top));
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
 	ImGui::SetNextWindowSize(size);
 
-	ImGui::Begin("Garden Gate", nullptr,
-		ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
-		ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	ImGui::Begin("Garden Gate", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
 	drawTitleBar(hwnd, dpiScale);
 	drawTabBar(currentTab, dpiScale);
 
 	ImGui::BeginChild("ContentArea", ImVec2(0, ImGui::GetContentRegionAvail().y), false);
-	if (currentTab == 0) drawLauncherTab(hwnd, dpiScale, status);
-	else               drawPatcherTab(hwnd, dpiScale, status);
 
-	if (status.visible) {
-		ImGui::Dummy(ImVec2(0, 10 * dpiScale));
-		ImGui::TextColored(status.color, "%s", status.message.c_str());
-		status.Update(ImGui::GetIO().DeltaTime);
+	if (currentTab == 0) {
+		drawLauncherTab(hwnd, dpiScale);
 	}
-	ImGui::EndChild();
+	else {
+		drawPatcherTab(hwnd, dpiScale);
+	}
 
+	ImGui::EndChild();
 	ImGui::End();
 }

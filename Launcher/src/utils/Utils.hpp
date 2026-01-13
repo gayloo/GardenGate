@@ -6,36 +6,34 @@
 
 namespace Utils {
 
-    namespace Registry {
-        std::string GetGamePathFromRegistry(bool isGW2);
-    }
+	namespace Registry {
+		std::string GetGamePathFromRegistry(bool isGW2);
+	}
 
-    namespace Dialog {
-        std::string BrowseForExe(HWND hwnd, bool isGW2);
-    }
+	namespace Dialog {
+		std::string BrowseForExe(HWND hwnd, bool isGW2);
+	}
 
-    namespace UI {
-        void CenteredInput(const char* label, std::string& value,
-            float centerOffset, float fieldWidth,
-            ImGuiInputTextFlags flags = 0);
+	namespace UI {
+		void CenteredInput(const char* label, std::string& value, float centerOffset, float fieldWidth, ImGuiInputTextFlags flags = 0);
+		bool CenteredButton(const char* label, float width, float dpiScale);
+	}
 
-        bool CenteredButton(const char* label, float width, float dpiScale);
+	namespace Process {
+		struct LaunchResult {
+			bool ok = false;
+			std::string error;
+			PROCESS_INFORMATION pi = { 0 };
+		};
 
-        struct Status {
-            std::string message;
-            ImVec4 color = ImVec4(1, 1, 1, 1);
-            bool visible = false;
-            float timer = 0.0f;
+		LaunchResult LaunchAndInject(const std::string& exePath, const std::string& args, bool injectDLL, const std::string& dllName = "level_loader.dll");
+		bool InjectDLL(DWORD processId, const std::string& dllPath);
+	}
 
-            void Show(const std::string& msg, bool error = false);
-            void Update(float dt);
-        };
-    }
-
-    namespace Process {
-        bool LaunchGame(const std::string& exePath,
-            const std::string& args,
-            HWND hwnd,
-            std::string& errorMessage);
-    }
+	namespace FileUtil {
+		bool copy(const std::string& src, const std::string& dest, std::string& errorMessage);
+		bool move(const std::string& src, const std::string& dest, std::string& errorMessage);
+		bool move_replace(const std::string& src, const std::string& dest, std::string& errorMessage);
+		void remove(const std::string& path);
+	}
 }
