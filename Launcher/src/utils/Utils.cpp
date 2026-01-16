@@ -6,6 +6,7 @@
 #include <shellapi.h>
 #include <shlwapi.h>
 #include <process.h>
+#include <tlhelp32.h>
 
 namespace fs = std::filesystem;
 
@@ -100,16 +101,8 @@ namespace Utils {
 
 			if (!game.custom_args.empty()) argList.push_back(game.custom_args);
 
-			if (!cfg.username.empty()) argList.push_back("-name \"" + cfg.username + "\"");
 			if (!cfg.server_ip.empty()) argList.push_back("-Client.ServerIp " + cfg.server_ip);
 			if (!cfg.password.empty()) argList.push_back("-Server.ServerPassword " + cfg.password);
-
-			if (game.moddata_enabled && !game.moddata_selected.empty()) {
-				std::string dataPathVal = "ModData/" + game.moddata_selected;
-				if (dataPathVal.find(' ') != std::string::npos)
-					dataPathVal = "\"" + dataPathVal + "\"";
-				argList.push_back("-dataPath " + dataPathVal);
-			}
 
 			std::string args;
 			for (size_t i = 0; i < argList.size(); ++i) {
@@ -199,11 +192,38 @@ namespace Utils {
 			return true;
 		}
 
+		void KillProcessByName(const std::string& processName) {
+			HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+			if (snapshot == INVALID_HANDLE_VALUE) return;
+
+			PROCESSENTRY32 pe32;
+			pe32.dwSize = sizeof(PROCESSENTRY32);
+
+			if (Process32First(snapshot, &pe32)) {
+				do {
+					if (_stricmp(pe32.szExeFile, processName.c_str()) == 0) {
+						HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, pe32.th32ProcessID);
+						if (hProcess) {
+							TerminateProcess(hProcess, 0);
+							CloseHandle(hProcess);
+						}
+					}
+				} while (Process32Next(snapshot, &pe32));
+			}
+
+			CloseHandle(snapshot);
+		}
+
 		LaunchResult LaunchAndInject(const std::string& exePath,
 			const std::string& args,
 			bool injectDLL,
-			const std::string& dllName)
+			const std::string& dllName,
+			const std::string& modDataPath)
 		{
+			KillProcessByName("EADesktop.exe");
+			KillProcessByName("Origin.exe");
+			KillProcessByName("steam.exe");
+
 			LaunchResult lr;
 			STARTUPINFOA si = { sizeof(si) };
 			PROCESS_INFORMATION pi{};
@@ -212,15 +232,50 @@ namespace Utils {
 			std::vector<char> cmdLine(cmdLineStr.begin(), cmdLineStr.end());
 			cmdLine.push_back('\0');
 
-			BOOL ok = CreateProcessA(
-				nullptr, cmdLine.data(),
-				nullptr, nullptr, FALSE, 0, nullptr,
-				fs::path(exePath).parent_path().string().c_str(),
-				&si, &pi);
+			LPVOID envBlock = nullptr;
+			if (!modDataPath.empty()) {
+				std::string envVar = "GAME_DATA_DIR=" + modDataPath;
+				std::string envStr;
+				
+				LPCH envStrings = GetEnvironmentStringsA();
+				if (envStrings) {
+					LPCH p = envStrings;
+					while (*p) {
+						envStr += p;
+						envStr += '\0';
+						p += strlen(p) + 1;
+					}
+					FreeEnvironmentStringsA(envStrings);
+				}
+				
+				envStr += envVar;
+				envStr += '\0';
+				envStr += '\0';
+				
+				std::vector<char> envBuffer(envStr.begin(), envStr.end());
+				envBlock = envBuffer.data();
+				
+				BOOL ok = CreateProcessA(
+					nullptr, cmdLine.data(),
+					nullptr, nullptr, FALSE, 0, envBlock,
+					fs::path(exePath).parent_path().string().c_str(),
+					&si, &pi);
 
-			if (!ok) {
-				lr.error = "CreateProcess failed. Error: " + std::to_string(GetLastError());
-				return lr;
+				if (!ok) {
+					lr.error = "CreateProcess failed. Error: " + std::to_string(GetLastError());
+					return lr;
+				}
+			} else {
+				BOOL ok = CreateProcessA(
+					nullptr, cmdLine.data(),
+					nullptr, nullptr, FALSE, 0, nullptr,
+					fs::path(exePath).parent_path().string().c_str(),
+					&si, &pi);
+
+				if (!ok) {
+					lr.error = "CreateProcess failed. Error: " + std::to_string(GetLastError());
+					return lr;
+				}
 			}
 
 			lr.ok = true;

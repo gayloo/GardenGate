@@ -31,7 +31,7 @@ namespace Utils {
 		std::string BuildArgs(const Config& cfg);
 		void PatchEAArgs(const std::string& args);
 
-		LaunchResult LaunchAndInject(const std::string& exePath, const std::string& args, bool injectDLL, const std::string& dllName = "level_loader.dll");
+		LaunchResult LaunchAndInject(const std::string& exePath, const std::string& args, bool injectDLL, const std::string& dllName = "level_loader.dll", const std::string& modDataPath = "");
 		bool InjectDLL(DWORD processId, const std::string& dllPath);
 	}
 

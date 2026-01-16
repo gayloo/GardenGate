@@ -265,8 +265,13 @@ static void drawLauncherTab(HWND hwnd, float dpiScale) {
 			showStatus("Please set a game path first!", true);
 		}
 		else {
+			std::string modDataPath;
+			if (currentGame.moddata_enabled && !currentGame.moddata_selected.empty()) {
+				modDataPath = "ModData/" + currentGame.moddata_selected;
+			}
+
 			Utils::Process::PatchEAArgs(args);
-			auto lr = Utils::Process::LaunchAndInject(currentGame.game_path, args, isGW1);
+			auto lr = Utils::Process::LaunchAndInject(currentGame.game_path, args, isGW1, "level_loader.dll", modDataPath);
 
 			if (!lr.ok) {
 				showStatus("Failed to launch: " + lr.error, true);
