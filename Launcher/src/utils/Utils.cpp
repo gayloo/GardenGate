@@ -80,7 +80,7 @@ namespace Utils {
 
 			if (ImGui::InputText(std::string("##").append(label).c_str(), buf, sizeof(buf), flags)) {
 				value = buf;
-				if (strcmp(label, "Username:") == 0 && value.length() > 15) value.resize(15);
+				if (strcmp(label, "Username:") == 0 && value.length() > 30) value.resize(30);
 			}
 		}
 
@@ -100,7 +100,7 @@ namespace Utils {
 
 			if (!game.custom_args.empty()) argList.push_back(game.custom_args);
 
-			if (!cfg.username.empty()) argList.push_back("-name " + cfg.username);
+			if (!cfg.username.empty()) argList.push_back("-name \"" + cfg.username + "\"");
 			if (!cfg.server_ip.empty()) argList.push_back("-Client.ServerIp " + cfg.server_ip);
 			if (!cfg.password.empty()) argList.push_back("-Server.ServerPassword " + cfg.password);
 
