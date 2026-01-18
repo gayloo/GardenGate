@@ -300,7 +300,7 @@ __pycache__/
 
 # Build stuff
 minhook/
+build/
 build-minhook/
 build-gg/
 build-launcher/
-

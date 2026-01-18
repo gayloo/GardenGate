@@ -1,18 +1,20 @@
-# GARDENS & GRAVEYARDS
+# Compatibility list for garden warfare 2
+
+### GARDENS & GRAVEYARDS
 Seeds of Time
 
 Great White North
 
 Wall-nut Hills
 
-# HERBAL ASSAULT
+### HERBAL ASSAULT
 Zombopolis
 
 Zomburbia
 
 Moon Base Z
 
-# TEAM VANQUISH/VANQUISH CONFIRMED
+### TEAM VANQUISH/VANQUISH CONFIRMED
 Zen Peak
 
 Boney Island
@@ -35,7 +37,7 @@ Frontline Flats
 
 Backyard Battleground
 
-# SUBURBINATION/GNOME BOMB
+### SUBURBINATION/GNOME BOMB
 Zen Peak
 
 Boney Island
@@ -56,7 +58,7 @@ Aqua Center
 
 Frontline Flats
 
-# CAPUTRE THE TACO
+### CAPUTRE THE TACO
 Zen Peak
 
 Colizeum
@@ -67,7 +69,7 @@ Frontline Flats
 
 Backyard Battleground
 
-# SOIL SURVIVORS
+### SOIL SURVIVORS
 Zen Peak
 
 Boney Island
@@ -86,12 +88,12 @@ Aqua Center
 
 Frontline Flats
 
-# BOSS HUNT
+### BOSS HUNT
 Frosty Creek (Captain Smasher)
 
 Time Park (Royal Hypno Flower)
 
-# COMMUNITY BOSS HUNT
+### COMMUNITY BOSS HUNT
 Frosty Creek (Yeti King)
 
 Sandy Sans (Sasquatch)
@@ -100,5 +102,5 @@ Time Park (Brothers Gnomus)
 
 Aqua Center (Spooky Squash)
 
-# CATS VS DINOS
+### CATS VS DINOS
 Gnomiverse XL

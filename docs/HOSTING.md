@@ -6,7 +6,7 @@
 
 2. Install the following mods;
 
-[UnlockAll](../Mods/GW1/UnlockAll.fbmod)
+[UnlockAll](../Mods/gw1/UnlockAll.fbmod)
 
 3. Open up the launcher go to patcher and press auto detect > patch (keep the ip section empty)
 
@@ -26,7 +26,7 @@ Put the one of your choice to game's directory and name it as `level_loader.dll`
 
 1. Download the archive from [releases](https://github.com/nocss42/GardenGate/releases) 
 
-2. Download the FBPACK from the repository [here](../Mods/GW2/GardenGate.fbpack)
+2. Download the FBPACK from the repository [here](../Mods/gw2/GardenGate.fbpack)
 
 3. Import the FBPack in Frosty Mod Manager, the load order should be something like this;
 
@@ -35,6 +35,8 @@ Put the one of your choice to game's directory and name it as `level_loader.dll`
 4. Open up the launcher go to patcher and press auto detect > patch (keep the ip section empty)
 
 5. Host any map of your choice through the multiplayer portal
+
+## If you own bfn on EA App and you want to switch back to official servers, instead of the revert button on the launcher use the repair button on the EA App itself and remove `dinput8.dll` from game directory. (we're looking into this)
 
 ### Battle for Neighborville
 
@@ -47,7 +49,7 @@ Put the one of your choice to game's directory and name it as `level_loader.dll`
 ### (Make sure to port forward `25200` or use some sort of VPN software)
 ### RadminVPN or Hamachi, Add your friends to the network and join by the IP it provides.
 
-### Mod Credits ###
+### Mod Credits
 Private Play (Dark Damona,brekko)
 
 Private Play Extension (Dark Damona,brekko)

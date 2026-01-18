@@ -1,8 +1,37 @@
 ﻿cmake_minimum_required(VERSION 3.24)
 project(GardenGateLauncher VERSION 0.1.0 LANGUAGES C CXX)
 
+# ---- Get Git commit info ----
+execute_process(
+    COMMAND git rev-parse --short HEAD
+    OUTPUT_VARIABLE GIT_HASH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+)
+
+execute_process(
+    COMMAND git show -s --format=%cd --date=short
+    OUTPUT_VARIABLE GIT_DATE
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+)
+
+if(NOT GIT_HASH)
+    set(GIT_HASH "unknown")
+endif()
+
+if(NOT GIT_DATE)
+    set(GIT_DATE "unknown")
+endif()
+
 # ---- Target ----
 add_executable(${PROJECT_NAME} WIN32)
+
+if (MSVC)
+    target_link_options(${PROJECT_NAME} PRIVATE
+        /MANIFEST:NO
+    )
+endif()
 
 # ---- Language / standard ----
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
@@ -60,6 +89,8 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
     SECONDARY_FGK=1
     SIZEOF_SIZE_T=8
     SIZEOF_UNSIGNED_LONG_LONG=8
+    GIT_HASH="${GIT_HASH}"
+    GIT_DATE="${GIT_DATE}"
 )
 
 # ---- Source Specific Fixes ----
