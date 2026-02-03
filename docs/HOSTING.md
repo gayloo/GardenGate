@@ -6,7 +6,7 @@
 
 2. Install the following mods;
 
-[UnlockAll](../Mods/gw1/UnlockAll.fbmod)
+[UnlockAll](../Mods/gw1/UnlockAll.fbmod) (Use `-SyncedBFSettings.AllUnlocksUnlocked true` if you can't get frosty working)
 
 3. Open up the launcher go to patcher and press auto detect > patch (keep the ip section empty)
 
