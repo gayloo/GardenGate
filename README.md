@@ -10,7 +10,6 @@ Experimental private servers for Plants vs. Zombies Garden Warfare 1,2 & Battle 
 </p>
 
 ## Roadmap
-------
 ### What's done:
 * Offsets
 * Hosting servers
