@@ -1,0 +1,33 @@
+name: Build Podman Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-export:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Podman
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y podman
+
+      - name: Build image with Podman
+        run: |
+          cd Podman
+          podman build --no-cache -t gardengate:latest .
+
+      - name: Save image
+        run: |
+          podman save -o gardengate.tar gardengate:latest
+
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gardengate-image
+          path: gardengate.tar
+          compression-level: 0
