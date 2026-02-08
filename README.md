@@ -5,6 +5,11 @@
 
 Experimental private servers for Plants vs. Zombies Garden Warfare 1,2 & Battle for Neighborville
 
+<p align="center">
+  <a href="https://discord.gg/sEs9NcUrF9"><img src="https://img.shields.io/discord/1425183662080659570?label=Discord&logo=discord"></a>
+</p>
+
+## Roadmap
 ------
 ### What's done:
 * Offsets
@@ -19,8 +24,6 @@ Experimental private servers for Plants vs. Zombies Garden Warfare 1,2 & Battle 
 * [Closing a client](./Assets/client.webp) through the console instead of the game tricks the server into believing you are still connected, so attempting to load into another level causes the entire server to softlock
 * Fix Zombopolis last, several doorways in the center area are blocked for clients. Host and bots can pass through, but clients and their objects (e.g. bean bombs) cannot.
 * Fix Zomburbia Zombot fuses on last point unable to be broken
-
-### [Discord server](https://discord.gg/sEs9NcUrF9)
 
 ## Credits
 
