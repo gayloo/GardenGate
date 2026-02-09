@@ -58,12 +58,18 @@ RUN install -Dm755 \
       target/x86_64-unknown-linux-musl/release/maxima \
       /usr/local/bin/
 
+# Create non-root user
+RUN useradd -m -u 1000 -s /bin/bash maxima
+
+USER maxima
+
 # Create the required dirs
 RUN mkdir -p \
-    "/root/.local/share/applications" \
-    "/opt/games/Battlefield 1" \
-    "/opt/games/Battlefield V"
+    "$HOME/.local/share/applications" \
+    "$HOME/games/Plants vs Zombies Garden Warfare" \
+    "$HOME/games/PVZGW2" \
+    "$HOME/games/PVZ Battle for Neighborville"
 
-WORKDIR /opt/games
+WORKDIR /home/maxima/games
 
 CMD ["maxima-cli"]
