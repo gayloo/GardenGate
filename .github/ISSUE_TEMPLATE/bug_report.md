@@ -1,17 +1,15 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
+title: '[bug]'
+labels: 'bug'
 ---
 
 **Describe the bug**
 A clear and concise description of what the bug is.
 
 **Which game?**
-Mention GW1, 2 or BFN
+Mention GW1, GW2 or BFN
 
 **To Reproduce**
 Steps to reproduce the behavior:

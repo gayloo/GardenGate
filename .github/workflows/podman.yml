@@ -18,7 +18,6 @@ jobs:
 
       - name: Build image with Podman
         run: |
-          cd Podman
           podman build --no-cache -t gardengate:latest .
 
       - name: Save image

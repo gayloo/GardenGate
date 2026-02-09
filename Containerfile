@@ -58,11 +58,6 @@ RUN install -Dm755 \
       target/x86_64-unknown-linux-musl/release/maxima \
       /usr/local/bin/
 
-# Remove build stuff to reduce image size
-RUN apt-get purge -y git curl cargo \
- && apt-get autoremove -y \
- && rm -rf /var/lib/apt/lists/* /root/.cargo/registry /root/.cargo/git
-
 # Create the required dirs
 RUN mkdir -p \
     "/root/.local/share/applications" \
