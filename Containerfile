@@ -7,7 +7,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV CARGO_TERM_COLOR=always
 ENV RUSTFLAGS="-C target-feature=+crt-static"
 ENV PATH="/root/.cargo/bin:${PATH}"
-#ENV MAXIMA_CREDENTIALS=email:pw
 
 # Dependencies
 RUN dpkg --add-architecture i386
@@ -22,7 +21,8 @@ RUN apt-get update && apt-get install -y \
     libxi-dev \
     libxkbcommon-dev \
     libxkbcommon-x11-dev \
-    protobuf-compiler
+    protobuf-compiler \
+    xdg-utils
 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
 
@@ -61,9 +61,8 @@ RUN install -Dm755 \
 # Create the required dirs
 RUN mkdir -p \
     "/root/.local/share/applications" \
-    "/opt/games/Plants vs Zombies Garden Warfare" \
-    "/opt/games/PVZGW2" \
-    "/opt/games/PVZ Battle for Neighborville"
+    "/opt/games/Battlefield 1" \
+    "/opt/games/Battlefield V"
 
 WORKDIR /opt/games
 
