@@ -6,7 +6,12 @@
 Experimental private servers for Plants vs. Zombies Garden Warfare 1,2 & Battle for Neighborville
 
 <p align="center">
-  <a href="https://discord.gg/sEs9NcUrF9"><img src="https://img.shields.io/discord/1425183662080659570?label=Discord&logo=discord"></a>
+  <a href="https://discord.gg/sEs9NcUrF9">
+    <img src="https://img.shields.io/discord/1425183662080659570?label=Discord&logo=discord">
+  </a>
+  <a href="https://matrix.to/#/#gardengate:matrix.org">
+    <img src="https://img.shields.io/matrix/gardengate:matrix.org?label=Matrix&logo=matrix">
+  </a>
 </p>
 
 ## Roadmap
