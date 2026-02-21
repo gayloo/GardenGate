@@ -301,9 +301,7 @@ __pycache__/
 # Build stuff
 *.dll
 *.exp
-*.lib
 *.cmakecache
-*.cmake
 CMakeCache.txt
 Makefile
 CMakeFiles/
