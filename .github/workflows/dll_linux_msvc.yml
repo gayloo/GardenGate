@@ -33,6 +33,7 @@ jobs:
         run: |
           sudo -u builder sh <<'EOF'
           set -e
+          cd DLL
           export WINE=$(command -v wine64 || command -v wine || false)
           $WINE wineboot
           git clone https://github.com/mstorsjo/msvc-wine
@@ -48,4 +49,4 @@ jobs:
         with:
           name: DLL
           path: |
-            dinput8.dll
+            DLL/dinput8.dll

@@ -309,8 +309,8 @@ Makefile
 CMakeFiles/
 my_msvc/
 
-minhook/
-build/
-build-minhook/
-build-gg/
-build-launcher/
+DLL/minhook/
+DLL/build/
+DLL/build-minhook/
+DLL/build-gg/
+DLL/build-launcher/

@@ -33,6 +33,7 @@ jobs:
         run: |
           sudo -u builder sh <<'EOF'
           set -e
+          cd DLL
           git clone https://github.com/TsudaKageyu/minhook
           sh -c "
             cmake -S minhook -B build-minhook \
@@ -54,4 +55,4 @@ jobs:
         with:
           name: DLL
           path: |
-            build-gg/dinput8.dll
+            DLL/build-gg/dinput8.dll

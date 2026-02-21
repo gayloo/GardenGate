@@ -29,6 +29,16 @@ Experimental private servers for Plants vs. Zombies Garden Warfare 1,2 & Battle 
 * Fix Zombopolis last, several doorways in the center area are blocked for clients. Host and bots can pass through, but clients and their objects (e.g. bean bombs) cannot.
 * Fix Zomburbia Zombot fuses on last point unable to be broken
 
+## Directory structure
+| Directory | Description                 |
+|-----------|-----------------------------|
+| `Assets` | Related assets               |
+| `Container` | Container files           |
+| `DLL` | DLL injected to the game client |
+| `Docs` | Documentation                  |
+| `Launcher` | Launcher application       |
+| `Mods` | QoL mods                       |
+
 ## Credits
 
 - RaT
