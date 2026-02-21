@@ -20,9 +20,6 @@ jobs:
         run: |
           cd Container
           podman build --no-cache -t gardengate:latest .
-
-      - name: Save image
-        run: |
           podman save -o podman-image.tar gardengate:latest
 
       - name: Upload image artifact
