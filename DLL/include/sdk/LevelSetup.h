@@ -6,24 +6,38 @@
 
 namespace fb
 {
-	struct LevelSetup
+	namespace gw1
 	{
-		LevelSetup()
+		struct LevelSetup
 		{
-			m_difficultyIndex = 0;
-			m_isSaveGame = false;
-			m_forceReloadResources = false;
+			String Name;
+			Array<LevelSetupOption> InclusionOptions;
+			int32_t DifficultyIndex;
+			Array<String> SubLevelNames;
+			String StartPoint;
+			Array<int32_t> SubLevelStates;
+			bool IsSaveGame;
+			bool ForceReloadResources;
 		};
+	}
 
-		String m_name;
-		Array<LevelSetupOption> m_inclusionOptions;
-		u32 m_difficultyIndex;
-		Array<String> m_subLevelNames;
-		String m_startPoint;
-		Array<s32> m_subLevelStates;
-		bool m_isSaveGame;
-		bool m_forceReloadResources;
-	};
+	namespace gw2 {
+		struct LevelSetup
+		{
+			String Name;
+			Array<LevelSetupOption> InclusionOptions;
+			int32_t DifficultyIndex;
+			String StartPoint;
+			String Playlist;
+			String LoadScreen_GameMode;
+			String LoadScreen_LevelName;
+			String LoadScreen_LevelDescription;
+			String LoadScreen_LevelAsset;
+			bool IsSaveGame;
+			bool HasPersistentSave;
+			bool ForceReloadResources;
+		};
+	}
 
 	namespace gw3
 	{

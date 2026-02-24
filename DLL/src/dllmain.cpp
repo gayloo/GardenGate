@@ -46,8 +46,9 @@ void Initialize() {
         g_game->initialize(GG::GameVersion::GW1);
         hm.registerHooks(g_PvZGW1_Hooks);
 
+        ApplyPatch(offsets::gw1::patch_BackendOnMessage);
         ApplyPatch(offsets::gw1::patch_AllowCommandArgumentsAsOptions);
-        ApplyPatch(offsets::gw1::patch_FixLevelReportInstanceIndex);
+        ApplyPatch(offsets::gw1::patch_AllowMultipleInstances);
         ApplyPatch(offsets::gw1::patch_FixAvailableConsumables);
         ApplyPatch(offsets::gw1::patch_FixHolidayConsumables);
     }
@@ -59,7 +60,10 @@ void Initialize() {
         hm.registerHooks(g_PvZGW2_Hooks);
 
         ApplyPatch(offsets::gw2::patch_AllowCommandArgumentsAsOptions);
+        ApplyPatch(offsets::gw2::patch_AllowMultipleInstances);
         ApplyPatch(offsets::gw2::patch_PlayerNameFormatting);
+        ApplyPatch(offsets::gw2::patch_SkipStreamInstallInstallation);
+        ApplyPatch(offsets::gw2::patch_MemFreeBug);
     }
     else if (CheckGameId(offsets::gw3::g_AppId, "PvZGW3")) {
         GG_LOG(GG::LogLevel::Info, "Identified: PvZ Garden Warfare 3");
@@ -74,6 +78,9 @@ void Initialize() {
         ApplyPatch(offsets::gw3::patch_Killswitches);
         ApplyPatch(offsets::gw3::patch_OfflineFix);
         ApplyPatch(offsets::gw3::patch_UnlockAwards);
+
+        ApplyPatch(offsets::gw3::patch_MemFreeBug);
+        ApplyPatch(offsets::gw3::patch_MultipleInstances);
     }
     else {
         GG_FATAL("Could not identify game!");

@@ -7,7 +7,7 @@ namespace fb
 {
     struct ServerSpawnOverrides
     {
-        LevelSetup *levelSetup;
+        void *levelSetup;
         ISocketManager *socketManager;
         intptr_t connectionCreator;
         intptr_t peerCreator;

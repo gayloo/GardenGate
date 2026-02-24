@@ -2,15 +2,15 @@
 #include <string_view>
 
 #ifndef GG_VERSION_MAJOR
-    #define GG_VERSION_MAJOR 0
+    #define GG_VERSION_MAJOR 1
 #endif
 
 #ifndef GG_VERSION_MINOR
-    #define GG_VERSION_MINOR 1
+    #define GG_VERSION_MINOR 0
 #endif
 
 #ifndef GG_VERSION_PATCH
-    #define GG_VERSION_PATCH 2
+    #define GG_VERSION_PATCH 0
 #endif
 
 #define GG_STRINGIFY_IMPL(x) #x
