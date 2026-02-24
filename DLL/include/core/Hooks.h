@@ -884,7 +884,7 @@ namespace fb
 
             auto name = type->getName();
 
-            GG_LOG(GG::LogLevel::Debug, "[Message] %s, type: %d, category: %d, playerId: %d",
+            GG_LOG(GG::LogLevel::DebugPlusPlus, "[Message] %s, type: %d, category: %d, playerId: %d",
                 name,
                 message->type,
                 message->category,
