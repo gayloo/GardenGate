@@ -3,19 +3,23 @@
 ### Universal
 ```
 -Window.Fullscreen true/false
--GameTime.MaxSimFps
+-GameTime.MaxSimFps 120
 ```
 
 ### GW1
 ```
--PVZServer.InActivityTimeOut -1
+-level
+-Game.DefaultLayerInclusion
 -PerfOverlay.DrawFps true
+-PVZServer.InActivityTimeOut -1
 -SyncedBFSettings.AllUnlocksUnlocked true
+
 ```
 
 ### GW2
 ```
--PVZServer.InActivityTimeOut -1
+-level
+-Game.DefaultLayerInclusion
 -PerfOverlay.DrawFps true
 -PVZServer.InActivityTimeOut -1
 -GameMode.SkipIntroHubNIS true
@@ -25,5 +29,6 @@
 
 ### BFN
 ```
-placeholder
+-GameSettings.InitialDSubLevel
+-GameSettings.DefaultLayerInclusion
 ```
