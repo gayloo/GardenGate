@@ -106,6 +106,7 @@
 `Levels/DSub_Rush_TownCenter/DSub_Rush_TownCenter`
 
 ### Funderdome
+- StartPoint_TVM
 - StartPoint_TeamElimination
 
 `Levels/DSub_4v4_SuperArena/DSub_4v4_SuperArena`
