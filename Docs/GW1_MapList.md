@@ -1,6 +1,5 @@
 # Levels
 ### Sharkbite Shores
-
 - Coop0
 - TeamDeathMatch0
 - GnomeBomb0
@@ -13,7 +12,6 @@
 ---
 
 ### Port Scallywag
-
 - Coop1
 - TeamDeathMatch1
 - GnomeBomb1
@@ -26,7 +24,6 @@
 ---
 
 ### Garden Center
-
 - Coop0
 - TeamDeathMatch0
 - GnomeBomb0
@@ -55,7 +52,6 @@
 ---
 
 ### Suburban Flats
-
 - Coop0
 - TeamDeathMatch0
 - GnomeBomb0
@@ -68,7 +64,6 @@
 ---
 
 ### Zomboss Estate
-
 - Coop1
 - TeamDeathMatch1
 - GnomeBomb1
@@ -81,7 +76,6 @@
 ---
 
 ### Jewel Junction
-
 - Coop0
 - TeamDeathMatch0
 - KillConfirmed0
@@ -96,7 +90,6 @@
 ---
 
 ### Crash Course
-
 - Coop0
 - TeamDeathMatch0
 - GnomeBomb0
@@ -112,7 +105,6 @@
 ---
 
 ### Driftwood Shores
-
 - RushLarge0
 
 | Day   | Night |
@@ -123,7 +115,6 @@
 ---
 
 ### Cactus Canyon
-
 - RushLarge0
 
 | Day   | Night |
@@ -134,7 +125,6 @@
 ---
 
 ### Main Street
-
 - RushLarge0
 
 | Day   | Night |
@@ -145,7 +135,6 @@
 ---
 
 ### Wall-nut Hills
-
 - RushLarge0
 
 | Day   | Night |
