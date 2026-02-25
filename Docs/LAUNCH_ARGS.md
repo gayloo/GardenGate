@@ -30,4 +30,5 @@
 ```
 -GameSettings.InitialDSubLevel
 -GameSettings.DefaultLayerInclusion
+-GameSettings.StartPoint
 ```
