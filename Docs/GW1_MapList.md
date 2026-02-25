@@ -154,18 +154,18 @@
 `_pvz/Levels/Sandbox/Level_SuburbiaC/Level_SuburbiaC`
 
 # GameModes
-| Mode                   | Internal Name     |
-|------------------------|-------------------|
-| Garden Ops             | Coop              |
-| Survival               | Survival          |
-| Gardens & Graveyards   | RushLarge         |
-| Team Vanquish          | TeamDeathMatch    |
-| Super Team Vanquish    | SmallTDM          |
-| Vanquish Confirmed     | KillConfirmed     |
-| Suburbination          | Domination        |
-| Gnome Bomb             | GnomeBomb         |
-| Taco Bandits           | SingleFlagCTF     |
-| Chomp Virus            | ChompVirus        |
+| GameMode                   | Internal Name     |
+|------------------------|-----------------------|
+| Garden Ops             | Coop                  |
+| Survival               | Survival              |
+| Gardens & Graveyards   | RushLarge             |
+| Team Vanquish          | TeamDeathMatch        |
+| Super Team Vanquish    | SmallTDM              |
+| Vanquish Confirmed     | KillConfirmed         |
+| Suburbination          | Domination            |
+| Gnome Bomb             | GnomeBomb             |
+| Taco Bandits           | SingleFlagCTF         |
+| Chomp Virus            | ChompVirus            |
 
 # Time of Day (TOD)
 - Day
