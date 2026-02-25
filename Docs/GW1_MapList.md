@@ -76,7 +76,8 @@
 - Domination0
 - SingleFlagCTF0
 
-- Day/Night
+| Day   | Night |
+|-------|-------|
 
 `_pvz/Levels/Desert/Level_COOP_Desert/Level_COOP_Desert`
 
@@ -89,7 +90,8 @@
 - Domination0
 - SingleFlagCTF0
 
-- Day/Night
+| Day   | Night |
+|-------|-------|
 
 `_pvz/Levels/Desert/Level_COOP_Palms/Level_COOP_Palms`
 
@@ -97,7 +99,8 @@
 
 - RushLarge0
 
-- Day/Night
+| Day   | Night |
+|-------|-------|
 
 `_pvz/Levels/Coastal/Rush_Coastal_001/Rush_Coastal_001`
 
@@ -105,7 +108,8 @@
 
 - RushLarge0
 
-- Day/Night
+| Day   | Night |
+|-------|-------|
 
 `_pvz/Levels/Desert/Rush_Desert_001/Rush_Desert_001`
 
@@ -113,7 +117,8 @@
 
 - RushLarge0
 
-- Day/Night
+| Day   | Night |
+|-------|-------|
 
 `_pvz/Levels/Sandbox/Level_Suburbia2/Level_Suburbia2`
 
@@ -121,7 +126,8 @@
 
 - RushLarge0
 
-- Day/Night
+| Day   | Night |
+|-------|-------|
 
 `_pvz/Levels/Sandbox/Level_SuburbiaC/Level_SuburbiaC`
 
@@ -139,6 +145,6 @@
 - Taco Bandits - SingleFlagCTF
 - Chomp Virus - ChompVirus
 
-# Time of day (TOD)
+# Time of Day (TOD)
 - Day
 - Night
