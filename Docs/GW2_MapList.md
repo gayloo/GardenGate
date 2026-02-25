@@ -11,8 +11,6 @@
 ### Backyard Battleground
 
 - FreeRoam
-- TeamVanquishLarge0
-- VanquishConfirmedLarge0
 
 `Levels/Level_FE_Hub/Level_FE_Hub`
 
@@ -79,6 +77,7 @@
 - GnomeBomb0
 - TeamElimination0
 - CommunityBossHunt0
+- FreeRoam
 
 `Levels/Level_Coop_Brainstreet/Level_Coop_Brainstreet`
 
@@ -126,6 +125,7 @@
 - GnomeBomb0
 - TeamElimination0
 - TacoBandits0
+- FreeRoam
 
 `Levels/Level_Coop_Rome/Level_Coop_Rome`
 
