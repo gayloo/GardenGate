@@ -46,8 +46,7 @@
 
 ### Gnomiverse XL (Cats vs. Dinos)
 
-- GardenOps0
-- GraveyardOps0
+- CatsVsDinos0
 
 `Levels/Level_Coop_InfinityPlane/Level_Coop_InfinityPlane`
 
@@ -271,6 +270,7 @@
 | Garden Ops                   | GardenOps0                 |
 | Graveyard Ops                | GraveyardOps0              |
 | Infinity Time                | Endless0                   |
+| Cats vs. Dinos               | CatsVsDinos0               |
 | Gardens & Graveyards         | GnGLarge0                  |
 | Herbal Assault               | HerbalAssaultLarge0        |
 | Team Vanquish                | TeamVanquishLarge0         |
