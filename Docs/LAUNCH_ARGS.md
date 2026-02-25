@@ -13,7 +13,6 @@
 -PerfOverlay.DrawFps true
 -PVZServer.InActivityTimeOut -1
 -SyncedBFSettings.AllUnlocksUnlocked true
-
 ```
 
 ### GW2
