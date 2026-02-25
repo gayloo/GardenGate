@@ -1,7 +1,6 @@
 # Levels
 
 ### Splash Screen
-
 - FreeRoam
 
 `Levels/Level_FE_Splash/Level_FE_Splash`
@@ -9,7 +8,6 @@
 ---
 
 ### Backyard Battleground
-
 - FreeRoam
 
 `Levels/Level_FE_Hub/Level_FE_Hub`
@@ -17,7 +15,6 @@
 ---
 
 ### Backyard Battleground (Community Portal Multiplayer)
-
 - TeamVanquishLarge0
 - VanquishConfirmedLarge0
 - TacoBandits0
@@ -27,7 +24,6 @@
 ---
 
 ### Trials of Gnomus
-
 - FreeRoam
 
 `Levels/Level_HUB_GnomeUnderworld/Level_HUB_GnomeUnderworld`
@@ -35,7 +31,6 @@
 ---
 
 ### The Gnomiverse (Infinity Time)
-
 - Endless0
 
 `Levels/Level_Endless_TimeVoid/Level_Endless_TimeVoid`
@@ -43,7 +38,6 @@
 ---
 
 ### Gnomiverse XL (Cats vs. Dinos)
-
 - CatsVsDinos0
 
 `Levels/Level_Coop_InfinityPlane/Level_Coop_InfinityPlane`
@@ -51,7 +45,6 @@
 ---
 
 ### Zen Peak
-
 - GardenOps0
 - GraveyardOps0
 - TeamVanquishLarge0
@@ -67,7 +60,6 @@
 ---
 
 ### Aqua Center
-
 - GardenOps0
 - GraveyardOps0
 - TeamVanquishLarge0
@@ -84,7 +76,6 @@
 ---
 
 ### Boney Island
-
 - GardenOps0
 - GraveyardOps0
 - TeamVanquishLarge0
@@ -99,7 +90,6 @@
 ---
 
 ### Sandy Sands
-
 - GardenOps0
 - GraveyardOps0
 - TeamVanquishLarge0
@@ -115,7 +105,6 @@
 ---
 
 ### Colizeum
-
 - GardenOps0
 - GraveyardOps0
 - TeamVanquishLarge0
@@ -132,7 +121,6 @@
 ---
 
 ### Frosty Creek
-
 - GardenOps0
 - GraveyardOps0
 - TeamVanquishLarge0
@@ -149,7 +137,6 @@
 ---
 
 ### Lunar Landing
-
 - GardenOps0
 - GraveyardOps0
 - TeamVanquishLarge0
@@ -165,7 +152,6 @@
 ---
 
 ### Time Park
-
 - GardenOps0
 - GraveyardOps0
 - TeamVanquishLarge0
@@ -182,7 +168,6 @@
 ---
 
 ### Z-Tech Factory
-
 - GardenOps0
 - GraveyardOps0
 - TeamVanquishLarge0
@@ -197,7 +182,6 @@
 ---
 
 ### Frontline Flats
-
 - GardenOps0
 - GraveyardOps0
 - TeamVanquishLarge0
@@ -213,7 +197,6 @@
 ---
 
 ### Great White North
-
 - GnGLarge0
 
 `Levels/Level_Rush_Snow/Level_Rush_Snow`
@@ -221,7 +204,6 @@
 ---
 
 ### Wall-nut Hills
-
 - GnGLarge0
 
 `Levels/Level_Rush_Suburbia/Level_Rush_Suburbia`
@@ -229,7 +211,6 @@
 ---
 
 ### Seeds of Time
-
 - GnGLarge0
 
 `Levels/Level_Rush_Themepark/Level_Rush_Themepark`
@@ -237,7 +218,6 @@
 ---
 
 ### Zombopolis
-
 - HerbalAssaultLarge0
 
 `Levels/Level_Herb_Brainstreet/Level_Herb_Brainstreet`
@@ -245,7 +225,6 @@
 ---
 
 ### Moon Base Z
-
 - HerbalAssaultLarge0
 - StreamingInstall
 
@@ -254,7 +233,6 @@
 ---
 
 ### Zomburbia
-
 - HerbalAssaultLarge0
 - SinglePlayerPlants0
 
