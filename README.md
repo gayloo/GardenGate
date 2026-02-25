@@ -55,6 +55,8 @@ Experimental private servers for Plants vs. Zombies Garden Warfare 1,2 & Battle 
 
 - werzdragon
 
+- megadwarf47
+
 - puro420
 
 ### Third-Party
@@ -62,3 +64,4 @@ Following open-source projects were used:
 
 - [MinHook](https://github.com/TsudaKageyu/minhook)
 - [Kyber](https://github.com/ArmchairDevelopers/Kyber)
+- [ImGui](https://github.com/ocornut/imgui)
