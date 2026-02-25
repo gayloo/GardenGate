@@ -1,5 +1,4 @@
 # Levels
-
 ### Giddy Park
 - StartPoint_SocialSpace
 
@@ -145,8 +144,6 @@
 - StartPoint_TeamElimination
 
 `Levels/DSub_4v4_SuperArena_V2/DSub_4v4_SuperArena_V2`
-
----
 
 # GameModes
 | GameMode                   | Internal Name                |
