@@ -261,8 +261,6 @@
 
 `Levels/Level_Herb_Zomburbia/Level_Herb_Zomburbia`
 
----
-
 # GameModes
 
 | Mode Name                    | Internal Name              |
