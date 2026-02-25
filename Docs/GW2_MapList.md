@@ -261,8 +261,7 @@
 `Levels/Level_Herb_Zomburbia/Level_Herb_Zomburbia`
 
 # GameModes
-
-| Mode Name                    | Internal Name              |
+| GameMode                    | Internal Name               |
 |------------------------------|----------------------------|
 | Free Roam                    | FreeRoam                   |
 | Streaming Install            | StreamingInstall           |
