@@ -10,6 +10,8 @@
 
 `_pvz/Levels/Coastal/Level_COOP_Coastal/Level_COOP_Coastal`
 
+---
+
 ### Port Scallywag
 
 - Coop1
@@ -20,6 +22,8 @@
 - SingleFlagCTF1
 
 `_pvz/Levels/Coastal/Level_COOP_Coastal/Level_COOP_Coastal`
+
+---
 
 ### Garden Center
 
@@ -34,6 +38,8 @@
 
 `_pvz/Levels/Mainstreet/Level_COOP_Mainstreet/Level_COOP_Mainstreet`
 
+---
+
 ### Chomp Town
 - Coop1
 - TeamDeathMatch1
@@ -46,6 +52,8 @@
 
 `_pvz/Levels/Mainstreet/Level_COOP_Mainstreet/Level_COOP_Mainstreet`
 
+---
+
 ### Suburban Flats
 
 - Coop0
@@ -57,6 +65,8 @@
 
 `_pvz/Levels/COOP_Suburbia/Level_COOP_Suburbia/Level_COOP_Suburbia`
 
+---
+
 ### Zomboss Estate
 
 - Coop1
@@ -67,6 +77,8 @@
 - SingleFlagCTF1
 
 `_pvz/Levels/COOP_Suburbia/Level_COOP_Suburbia/Level_COOP_Suburbia`
+
+---
 
 ### Jewel Junction
 
@@ -80,6 +92,8 @@
 |-------|-------|
 
 `_pvz/Levels/Desert/Level_COOP_Desert/Level_COOP_Desert`
+
+---
 
 ### Crash Course
 
@@ -95,6 +109,8 @@
 
 `_pvz/Levels/Desert/Level_COOP_Palms/Level_COOP_Palms`
 
+---
+
 ### Driftwood Shores
 
 - RushLarge0
@@ -103,6 +119,8 @@
 |-------|-------|
 
 `_pvz/Levels/Coastal/Rush_Coastal_001/Rush_Coastal_001`
+
+---
 
 ### Cactus Canyon
 
@@ -113,6 +131,8 @@
 
 `_pvz/Levels/Desert/Rush_Desert_001/Rush_Desert_001`
 
+---
+
 ### Main Street
 
 - RushLarge0
@@ -122,6 +142,8 @@
 
 `_pvz/Levels/Sandbox/Level_Suburbia2/Level_Suburbia2`
 
+---
+
 ### Wall-nut Hills
 
 - RushLarge0
@@ -130,6 +152,8 @@
 |-------|-------|
 
 `_pvz/Levels/Sandbox/Level_SuburbiaC/Level_SuburbiaC`
+
+---
 
 # GameModes
 | Mode                   | Internal Name     |
