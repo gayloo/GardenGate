@@ -29,6 +29,6 @@
 ### BFN
 ```
 -GameSettings.InitialDSubLevel
--GameSettings.DefaultLayerInclusion
 -GameSettings.StartPoint
+-GameSettings.DefaultLayerInclusion
 ```
