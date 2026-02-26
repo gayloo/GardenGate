@@ -4,13 +4,9 @@
 
 1. Download the archive from [releases](https://github.com/nocss42/GardenGate/releases)
 
-2. Install the following mods;
+2. Open up the launcher go to patcher and press auto detect > patch (keep the ip section empty)
 
-[UnlockAll](../Mods/gw1/UnlockAll.fbmod) (Use `-SyncedBFSettings.AllUnlocksUnlocked true` if you can't get frosty working)
-
-3. Open up the launcher go to patcher and press auto detect > patch (keep the ip section empty)
-
-4. Download map loader dll of your choice;
+3. Download map loader dll of your choice;
 
 We recommend;
 
@@ -20,7 +16,7 @@ We recommend;
 
 Put the one of your choice to game's directory and name it as `level_loader.dll` and the launcher will auto inject it upon pressing launch.
 
-5. Press load map from in-game ui of your dll and your server should be up
+4. Press load map from in-game ui of your dll and your server should be up
 
 ### Garden warfare 2
 
@@ -35,8 +31,6 @@ Put the one of your choice to game's directory and name it as `level_loader.dll`
 4. Open up the launcher go to patcher and press auto detect > patch (keep the ip section empty)
 
 5. Host any map of your choice through the multiplayer portal
-
-## If you own bfn on EA App and you want to switch back to official servers, instead of the revert button on the launcher use the repair button on the EA App itself and remove `dinput8.dll` from game directory. (we're looking into this)
 
 ### Battle for Neighborville
 
