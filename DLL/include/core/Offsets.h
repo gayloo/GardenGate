@@ -24,6 +24,7 @@ namespace offsets
         DEFINE_FUNCTION(LevelSetupInit, 0x141464B10);
 
         //--- Hooks
+        DEFINE_FUNCTION(InitSettings, 0x14000D030);
         DEFINE_FUNCTION(MainInit, 0x14000B070);
         DEFINE_FUNCTION(ServerStart, 0x1406F8F80);
         DEFINE_FUNCTION(CreateServer, 0x140011AE0);
@@ -37,6 +38,7 @@ namespace offsets
         DEFINE_PATCH(BackendOnMessage, 0x140B2D2A0, (std::array<std::uint8_t, 1>{ 0xC3 }));
         DEFINE_PATCH(AllowMultipleInstances, 0x1400108B1, (std::array<std::uint8_t, 1>{ 0xEB }));
         DEFINE_PATCH(AllowCommandArgumentsAsOptions, 0x14000D3FA, (std::array<std::uint8_t, 1>{ 0xDE }));
+        DEFINE_PATCH(DisableTutorials, 0x140B4142A, (std::array<std::uint8_t, 5>{ 0x90, 0x90, 0x90, 0x90, 0x90 }));
         DEFINE_PATCH(FixAvailableConsumables, 0x140B3F69D, (std::array<std::uint8_t, 1>{ 0xC9 }));
         DEFINE_PATCH(FixHolidayConsumables, 0x140B3F615, (std::array<std::uint8_t, 6>{ 0x90, 0x90, 0x90, 0x90, 0x90, 0x90}));
     }
@@ -54,6 +56,7 @@ namespace offsets
         DEFINE_FUNCTION(GetContainer, 0x1401F2360);
 
         //--- Hooks
+        DEFINE_FUNCTION(InitSettings, 0x140131ED0);
         DEFINE_FUNCTION(MainInit, 0x14012CBB0);
         DEFINE_FUNCTION(ServerStart, 0x1405D5FE0);
         DEFINE_FUNCTION(CreateServer, 0x14012E880);

@@ -49,6 +49,25 @@ namespace fb
             return reinterpret_cast<T*>(container);
         }
 
+        intptr_t initSettings(intptr_t inst)
+        {
+            const auto trampoline = GG::HookManager::getManager().Call(&initSettings);
+            auto ret = trampoline(inst);
+
+            GG_LOG(GG::LogLevel::Debug, "fb::Main::initSettings(this: %p)", inst);
+
+            auto onlineSettings = getContainer<OnlineSettings>("Online");
+            auto serverSettings = getContainer<ServerSettings>("Server");
+            auto syncedSettings = getContainer<SyncedBFSettings>("SyncedBFSettings");
+
+            onlineSettings->Backend = Backend_Peer;
+            onlineSettings->ServerAllowAnyReputation = true;
+            serverSettings->IsRanked = false;
+            syncedSettings->AllUnlocksUnlocked = true;
+
+            return ret;
+        }
+
         void initDedicatedServer(fb::Main* inst, intptr_t platformHook)
         {
             GG_LOG(GG::LogLevel::Debug, "fb::Main::initDedicatedServer(this: %p, platformHook: %p)", inst, platformHook);
@@ -69,15 +88,6 @@ namespace fb
             spawnInfo.isCoop = false;
             spawnInfo.isMenu = false;
             spawnInfo.keepResources = false;
-
-            auto onlineSettings = getContainer<OnlineSettings>("Online");
-            auto serverSettings = getContainer<ServerSettings>("Server");
-            auto syncedSettings = getContainer<SyncedBFSettings>("SyncedBFSettings");
-
-            onlineSettings->Backend = Backend_Peer;
-            onlineSettings->ServerAllowAnyReputation = true;
-            serverSettings->IsRanked = false;
-            syncedSettings->AllUnlocksUnlocked = true;
 
             auto server = CreateServer(reinterpret_cast<intptr_t>(inst), &spawnInfo);
 
@@ -306,6 +316,33 @@ namespace fb
             return reinterpret_cast<T*>(container);
         }
 
+        intptr_t initSettings(intptr_t inst)
+        {
+            const auto trampoline = GG::HookManager::getManager().Call(&initSettings);
+            auto ret = trampoline(inst);
+
+            GG_LOG(GG::LogLevel::Debug, "fb::Main::initSettings(this: %p)", inst);
+
+            auto onlineSettings = getContainer<PVZOnlineSettings>("Online");
+            auto gameSettings = getContainer<GameSettings>("Game");
+            auto gameModeSettings = getContainer<GameModeSettings>("GameMode");
+            auto pvzServerSettings = getContainer<PVZServerSettings>("PVZServer");
+            auto networkSettings = getContainer<NetworkSettings>("Network");
+
+            gameSettings->Platform = GamePlatform_Win32;
+            onlineSettings->Backend = Backend_Local;
+            onlineSettings->PeerBackend = Backend_LocalNoStorage;
+            onlineSettings->ClientIsPresenceEnabled = false;
+            onlineSettings->ServerIsPresenceEnabled = false;
+            onlineSettings->OnlineGameInteractionMasterKillSwitch = true;
+            onlineSettings->OnlineGameInteractionKillSwitchList = reinterpret_cast<char*>(offsets::gw2::g_EmptyArray);
+            networkSettings->MaxClientCount = 64;
+            pvzServerSettings->KickIdlePlayers = false;
+            gameModeSettings->SkipPreroundCountdown = true;
+
+            return ret;
+        }
+
         void ServerLoadLevelMessagePost(LevelSetup* levelSetup, bool fadeOut, bool forceReloadResources)
         {
             const auto trampoline = GG::HookManager::getManager().Call(&ServerLoadLevelMessagePost);
@@ -344,24 +381,6 @@ namespace fb
             spawnInfo.keepResources = true;
             spawnInfo.validLocalPlayersMask = 0x1;
             spawnInfo.saveData.init(0);
-
-            auto onlineSettings = getContainer<PVZOnlineSettings>("Online");
-            auto gameSettings = getContainer<GameSettings>("Game");
-            auto gameModeSettings = getContainer<GameModeSettings>("GameMode");
-            auto pvzServerSettings = getContainer<PVZServerSettings>("PVZServer");
-            auto networkSettings = getContainer<NetworkSettings>("Network");
-            auto syncedSettings = getContainer<SyncedPVZSettings>("SyncedPVZSettings");
-
-            gameSettings->Platform = GamePlatform_Win32;
-            onlineSettings->Backend = Backend_Local;
-            onlineSettings->ServerIsPresenceEnabled = false;
-            onlineSettings->ClientIsPresenceEnabled = false;
-            onlineSettings->OnlineGameInteractionKillSwitchList = reinterpret_cast<char*>(offsets::gw2::g_EmptyArray);
-            networkSettings->MaxClientCount = 64;
-            pvzServerSettings->KickIdlePlayers = false;
-            syncedSettings->AllUnlocksUnlocked = true;
-            gameModeSettings->SkipPreroundCountdown = true;
-            gameModeSettings->OverrideRoundStartPlayerCount = 1;
 
             auto server = CreateServer(reinterpret_cast<intptr_t>(inst), &spawnInfo);
 
@@ -647,6 +666,23 @@ namespace fb
                 splash = true;
             }
 
+            auto netObjectSettings = GetSettings<NetObjectSystemSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_NetObjectSettings);
+            netObjectSettings->MaxServerConnectionCount = 64;
+
+            auto serverSettings = GetSettings<PVZServerSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_PVZServerSettings);
+            serverSettings->KickIdlePlayers = false;
+
+            auto pvzOnlineSettings = GetSettings<PVZOnlineSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_PVZOnlineSettings);
+            pvzOnlineSettings->ShouldControlBlaze = false;
+            pvzOnlineSettings->ClientIsPresenceEnabled = false;
+            pvzOnlineSettings->ServerIsPresenceEnabled = false;
+            pvzOnlineSettings->ServerAllowAnyReputation = true;
+
+            auto gameModeSettings = GetSettings<GameModeSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_GameModeSettings);
+            gameModeSettings->ShouldSkipHUBTutorial = true;
+            gameModeSettings->SocialHUBSkipStationTutorials = true;
+            gameModeSettings->SocialHUBSkipLandingPage = true;
+
             return trampoline(inst, info, spawnOverrides, socketManager);
         }
 
@@ -720,20 +756,6 @@ namespace fb
                         *e = 0x4551EDBA;
                         g_game->setJoining(true);
                     }
-
-                    auto netObjectSettings = GetSettings<NetObjectSystemSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_NetObjectSettings);
-                    netObjectSettings->MaxServerConnectionCount = 64;
-
-                    auto serverSettings = GetSettings<PVZServerSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_PVZServerSettings);
-                    serverSettings->KickIdlePlayers = false;
-
-                    auto pvzOnlineSettings = GetSettings<PVZOnlineSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_PVZOnlineSettings);
-                    pvzOnlineSettings->ServerAllowAnyReputation = true;
-
-                    auto gameModeSettings = GetSettings<GameModeSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_GameModeSettings);
-                    gameModeSettings->ShouldSkipHUBTutorial = true;
-                    gameModeSettings->SocialHUBSkipStationTutorials = true;
-                    gameModeSettings->SocialHUBSkipLandingPage = true;
 
                     void* user = reinterpret_cast<void*>(g_game->getPrimaryUser());
                     UserAdded(nullptr, &user, 0);
@@ -811,23 +833,6 @@ namespace fb
             spawnInfo.isCoop = false;
             spawnInfo.saveData.init(0);
 
-            auto netObjectSettings = GetSettings<NetObjectSystemSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_NetObjectSettings);
-            netObjectSettings->MaxServerConnectionCount = 64;
-
-            auto serverSettings = GetSettings<PVZServerSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_PVZServerSettings);
-            serverSettings->KickIdlePlayers = false;
-
-            auto pvzOnlineSettings = GetSettings<PVZOnlineSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_PVZOnlineSettings);
-            pvzOnlineSettings->ShouldControlBlaze = false;
-            pvzOnlineSettings->ClientIsPresenceEnabled = false;
-            pvzOnlineSettings->ServerIsPresenceEnabled = false;
-            pvzOnlineSettings->ServerAllowAnyReputation = true;
-
-            auto gameModeSettings = GetSettings<GameModeSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_GameModeSettings);
-            gameModeSettings->ShouldSkipHUBTutorial = true;
-            gameModeSettings->SocialHUBSkipStationTutorials = true;
-            gameModeSettings->SocialHUBSkipLandingPage = true;
-
             SpawnServer(inst + 0x08, &spawnInfo);
 
             return 1;
@@ -884,7 +889,7 @@ namespace fb
 
             auto name = type->getName();
 
-            GG_LOG(GG::LogLevel::DebugPlusPlus, "[Message] %s, type: %d, category: %d, playerId: %d",
+            GG_LOG(GG::LogLevel::Debug, "[Message] %s, type: %d, category: %d, playerId: %d",
                 name,
                 message->type,
                 message->category,
@@ -934,6 +939,7 @@ namespace fb
 }
 
 static GG::HookTemplate g_PvZGW1_Hooks[] = {
+    {offsets::gw1::fn_InitSettings,             reinterpret_cast<void*>(fb::gw1::initSettings),             true},
     {offsets::gw1::fn_ServerStart,              reinterpret_cast<void*>(fb::gw1::ServerStart),              true},
     {offsets::gw1::fn_ClientInitNetwork,        reinterpret_cast<void*>(fb::gw1::ClientInitNetwork),        true},
     {offsets::gw1::fn_ClientConnectToAddress,   reinterpret_cast<void*>(fb::gw1::ClientConnectToAddress),   true},
@@ -945,6 +951,7 @@ static GG::HookTemplate g_PvZGW1_Hooks[] = {
 };
 
 static GG::HookTemplate g_PvZGW2_Hooks[] = {
+    {offsets::gw2::fn_InitSettings,             reinterpret_cast<void*>(fb::gw2::initSettings),             true},
     {offsets::gw2::fn_ServerStart,              reinterpret_cast<void*>(fb::gw2::ServerStart),              true},
     {offsets::gw2::fn_ClientInitNetwork,        reinterpret_cast<void*>(fb::gw2::ClientInitNetwork),        true},
     {offsets::gw2::fn_ClientConnectToAddress,   reinterpret_cast<void*>(fb::gw2::ClientConnectToAddress),   true},

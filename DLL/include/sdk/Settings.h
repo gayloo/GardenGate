@@ -508,7 +508,7 @@ namespace fb
             bool IsOriginEnvProd;
         };
 
-        struct NetworkSettings
+        struct NetworkSettings : SettingsBase
         {
             uint32_t ProtocolVersion;
             char* TitleId;

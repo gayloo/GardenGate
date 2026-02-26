@@ -49,6 +49,7 @@ void Initialize() {
         ApplyPatch(offsets::gw1::patch_BackendOnMessage);
         ApplyPatch(offsets::gw1::patch_AllowCommandArgumentsAsOptions);
         ApplyPatch(offsets::gw1::patch_AllowMultipleInstances);
+        ApplyPatch(offsets::gw1::patch_DisableTutorials);
         ApplyPatch(offsets::gw1::patch_FixAvailableConsumables);
         ApplyPatch(offsets::gw1::patch_FixHolidayConsumables);
     }
