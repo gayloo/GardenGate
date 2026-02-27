@@ -4,10 +4,10 @@
 
 2. Install the following mods for best experience
 
-### Garden warfare 2/Battle for Neighborville
+### Garden warfare 2
 [GardenGate.fbpack](../Mods/gw2/GardenGate.fbpack)
 
-Import the FBPack in Frosty Mod Manager (Skip this step for bfn), the load order should be something like this;
+Import the FBPack in Frosty Mod Manager, the load order should be something like this;
 
 <img src="./Assets/load_order.webp" />
 
