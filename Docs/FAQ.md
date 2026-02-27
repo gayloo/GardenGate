@@ -28,7 +28,7 @@ Check if it's been added to the what's not done part of [README](../README.md)
 For small client sided mods like FOV changer not really, but big mods like project visionary will make it crash if you don't have them installed.
 
 ### Is there a way to host this as a dedicated server?
-Yes. You can find dedicated server docs [here](./HOSTING.md) & [here](./LINUX_DEDICATED.md)
+Yes. You can find dedicated server docs [here](./HOSTING_DEDICATED.md) & [here](./LINUX_DEDICATED.md)
 
 ### Who made the server dll for this?
 @sonicrat did the whole thing
