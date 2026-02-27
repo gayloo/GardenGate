@@ -6,6 +6,9 @@ No, this is a private server project created for educational and experimental pu
 ### Does this make gw2/bfn work with wine again?
 Yes it should. Please [see this](./LINUX.md)
 
+### Does this have some sort of anti-cheat of its own?
+No and there aren't plans on implementing one anytime soon.
+
 ### Does this work on console?
 No it doesn't.
 
