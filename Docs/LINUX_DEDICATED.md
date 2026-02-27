@@ -13,9 +13,9 @@ Ensure the following dependencies are installed on your host:
 
 ### Generating `auth.toml`
 
-Download the pre-release version of maxima from [https://github.com/silkker/MARNE/releases/tag/0.1 here]
+Download the pre-release version of maxima from [here](https://github.com/silkker/MARNE/releases/tag/0.1)
 
-After logging in, locate the generated <code>auth.toml</code> file:
+After logging in, locate the generated `auth.toml` file:
 
 - Windows:
   `%APPDATA%\Roaming\ArmchairDevelopers\Maxima\data`
@@ -173,3 +173,4 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2 / plants-vs-zombies-garden-warfare / pvz-battle-for-neighborville
 ```
+
