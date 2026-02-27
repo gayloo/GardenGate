@@ -107,11 +107,13 @@ mv /opt/games/gw2/EAAntiCheat.GameServiceLauncher.exe \
    /opt/games/gw2/EAAntiCheat.GameServiceLauncher.exe.bak
 ```
 
-Download and place the dinput8.dll:
+Patch the game:
 
 ```sh
-curl -L https://github.com/silkker/MARNE/raw/refs/heads/main/Marne.dll \
-     -o /opt/games/gw2/dinput8.dll
+curl -L https://github.com/nocss42/GardenGate/releases/latest/download/GardenGate.zip \
+     -o /opt/games/GardenGate.zip
+unzip /opt/games/GardenGate.zip -d /opt/games
+umu-run /opt/games/GardenGate_Launcher.exe --patch gw2 /opt/games/gw2/
 ```
 
 ### Server Configuration
@@ -173,4 +175,5 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2 / plants-vs-zombies-garden-warfare / pvz-battle-for-neighborville
 ```
+
 
