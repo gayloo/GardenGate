@@ -21,8 +21,8 @@ Check if it's been added to the what's not done part of [README](../README.md)
 ### Do I need every mod the server I'm joining has?
 For small client sided mods like FOV changer not really, but big mods like project visionary will make it crash if you don't have them installed.
 
-### Is there a way to host this like a dedicated server?
-Not currently. We might look into it once the current roadmap is done but no promises.
+### Is there a way to host this as a dedicated server?
+Yes. You can find dedicated server docs [here](./HOSTING.md) & [here](./LINUX_DEDICATED.md)
 
 ### Who made the server dll for this?
 @sonicrat did the whole thing
