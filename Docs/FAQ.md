@@ -10,7 +10,7 @@ Yes it should. Please [see this](./LINUX.md)
 No and there aren't plans on implementing one anytime soon.
 
 ### Does this allow illegal copies of the game to be played online?
-It doesn't alter the drm in any way.
+It doesn't alter the drm in any way. It's highly recommended that you don't use illegal copies of the game.
 
 ### Does this work on console?
 No it doesn't.
