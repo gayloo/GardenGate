@@ -9,7 +9,7 @@ Yes it should. Please [see this](./LINUX.md)
 ### Does this have some sort of anti-cheat of its own?
 No and there aren't plans on implementing one anytime soon.
 
-### Does this allow illegal copies of the game?
+### Does this allow illegal copies of the game to be played online?
 It doesn't alter the drm in any way.
 
 ### Does this work on console?
