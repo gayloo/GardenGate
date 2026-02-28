@@ -74,9 +74,27 @@ namespace GG
             }
         }
 
-        [[nodiscard]] inline constexpr bool should_log(LogLevel lvl) noexcept
+        [[nodiscard]] inline LogLevel effective_log_level() noexcept
         {
-            return static_cast<unsigned>(lvl) >= static_cast<unsigned>(LogLevel::Current);
+            static const LogLevel level = []() noexcept -> LogLevel {
+                char env[16]{};
+                DWORD len = GetEnvironmentVariableA("GG_LOG_LEVEL", env, sizeof(env));
+                if (!len) return LogLevel::Current;
+                while (len > 0 && env[len - 1] == ' ') env[--len] = '\0';
+                if (_stricmp(env, "Debug++") == 0) return LogLevel::DebugPlusPlus;
+                if (_stricmp(env, "Debug")   == 0) return LogLevel::Debug;
+                if (_stricmp(env, "Info")    == 0) return LogLevel::Info;
+                if (_stricmp(env, "Warning") == 0) return LogLevel::Warning;
+                if (_stricmp(env, "Error")   == 0) return LogLevel::Error;
+                if (_stricmp(env, "Fatal")   == 0) return LogLevel::Fatal;
+                return LogLevel::Current;
+            }();
+            return level;
+        }
+
+        [[nodiscard]] inline bool should_log(LogLevel lvl) noexcept
+        {
+            return static_cast<unsigned>(lvl) >= static_cast<unsigned>(effective_log_level());
         }
 
         [[nodiscard]] inline constexpr std::string_view filename(std::string_view path) noexcept
