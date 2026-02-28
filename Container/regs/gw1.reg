@@ -1,14 +1,16 @@
 Windows Registry Editor Version 5.00
 
+# This is still wip and gives "You must be signed into Origin to continue."
+
 [HKEY_LOCAL_MACHINE\Software\EA]
 
 [HKEY_LOCAL_MACHINE\Software\EA Games]
 
-[HKEY_LOCAL_MACHINE\Software\EA Games\Battlefield 1]
-"DisplayName"="Battlefield™ 1"
-"Install Dir"="Z:\\opt\\games\\bf1\\"
+[HKEY_LOCAL_MACHINE\Software\EA Games\Plants vs Zombies Garden Warfare]
+"DisplayName"="Plants vs. Zombies™ Garden Warfare Digital Deluxe"
+"Install Dir"="Z:\\opt\\games\\gw1\\"
 "Locale"="en_US"
-"Product GUID"="{335B50BC-6130-4BAF-9A6A-F1561270587B}"
+"Product GUID"="{A5AC7D7B-C1D5-4AF9-8829-993DA335BE1B}"
 
 [HKEY_LOCAL_MACHINE\Software\Electronic Arts]
 
@@ -21,18 +23,21 @@ Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\Software\Wow6432Node\EA Games]
 
-[HKEY_LOCAL_MACHINE\Software\Wow6432Node\EA Games\Battlefield 1]
-"DisplayName"="Battlefield™ 1"
-"Install Dir"="Z:\\opt\\games\\bf1\\"
+[HKEY_LOCAL_MACHINE\Software\Wow6432Node\EA Games\Plants vs Zombies Garden Warfare]
+"DisplayName"="Plants vs. Zombies™ Garden Warfare Digital Deluxe"
+"Install Dir"="Z:\\opt\\games\\gw1\\"
 "Locale"="en_US"
-"Product GUID"="{335B50BC-6130-4BAF-9A6A-F1561270587B}"
+"Product GUID"="{A5AC7D7B-C1D5-4AF9-8829-993DA335BE1B}"
 
-[HKEY_LOCAL_MACHINE\Software\Wow6432Node\EA Games\Battlefield 1\InstallOptSelect]
+[HKEY_LOCAL_MACHINE\Software\Wow6432Node\EA Games\Plants vs Zombies Garden Warfare1\InstallOptSelect]
 @="1"
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Origin Games\1026023]
-"locale"="en_US"
-"DisplayName"="Battlefield™ 1"
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Origin]
+"ClientPath"="C:\\Program Files\\Electronic Arts\\EA Desktop\\EA Desktop\\EADesktop.exe"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Origin Games\1014748]
+"DisplayName"="Plants vs. Zombies™ Garden Warfare Digital Deluxe"
+"Locale"="en_US"
 
 [HKEY_LOCAL_MACHINE\Software\Wow6432Node\Electronic Arts]
 
@@ -44,12 +49,21 @@ Windows Registry Editor Version 5.00
 "InstallSuccessful"="true"
 
 [HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{335B50BC-6130-4BAF-9A6A-F1561270587B}]
-"DisplayIcon"="\"Z:\\opt\\games\\bf1\\bf1.exe\""
-"DisplayName"="Battlefield™ 1"
+"DisplayIcon"="\"Z:\\opt\\games\\gw1\\PVZ.Main_Win64_Retail.exe\""
+"DisplayName"="Plants vs. Zombies™ Garden Warfare Digital Deluxe"
 "DisplayVersion"="1.0.78.30969"
 "EstimatedSize"=dword:000ed365
-"HelpLink"="Z:\\opt\\games\\bf1\\Support\\EA Help\\Technical Support.en_US.rtf"
-"InstallLocation"="Z:\\opt\\games\\bf1\\"
+"HelpLink"="Z:\\opt\\games\\gw1\\Support\\EA Help\\Technical Support.en_US.rtf"
+"InstallLocation"="Z:\\opt\\games\\gw1\\"
 "Publisher"="Electronic Arts"
-"UninstallString"="\"C:\\Program Files\\Common FilesEAInstaller\\Battlefield 1\\Cleanup.exe\" uninstall_game -autologging"
+"UninstallString"="\"C:\\Program Files\\Common FilesEAInstaller\\Plants vs Zombies Garden Warfare\\Cleanup.exe\" uninstall_game -autologging"
 "URLInfoAbout"="http://www.ea.com"
+
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PopCap\Plants vs Zombies Garden Warfare]
+"GDFBinary"="Z:\\opt\\games\\gw1\\GDFBinary_en_US.dll"
+"DisplayName"="PVZ Garden Warfare"
+"Locale"="en_US"
+"Product GUID"="{A5AC7D7B-C1D5-4AF9-8829-993DA335BE1B}"
+"Install Dir"="Z:\\opt\\games\\gw1\\"
