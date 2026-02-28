@@ -27,7 +27,7 @@ namespace GG
 #if defined(_DEBUG)
         Current = Debug
 #else
-        Current = Info
+        Current = DebugPlusPlus
 #endif
     };
 
