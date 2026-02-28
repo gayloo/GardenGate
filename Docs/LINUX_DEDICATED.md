@@ -94,16 +94,9 @@ umu-run $HOME/.local/share/maxima/wine/prefix/drive_c/windows/syswow64/regedit.e
 $HOME/gw2.reg
 ```
 
-### Anti-Cheat Bypass and dinput8.dll
+### Patch the game
 
-Rename the anti-cheat launcher:
-
-```sh
-mv /opt/games/gw2/EAAntiCheat.GameServiceLauncher.exe \
-   /opt/games/gw2/EAAntiCheat.GameServiceLauncher.exe.bak
-```
-
-Patch the game:
+Patch the game by running;
 
 ```sh
 curl -L https://github.com/nocss42/GardenGate/releases/latest/download/GardenGate.zip \
@@ -120,7 +113,14 @@ Edit server settings as you wish:
 vim /opt/games/gw2/ServerSettings.txt
 ```
 
-Launch the server:
+### Maxima game slugs
+```
+plants-vs-zombies-garden-warfare
+plants-vs-zombies-garden-warfare-2
+pvz-battle-for-neighborville
+```
+
+Launch the server;
 
 ```sh
 wlheadless-run -c cage -- maxima-cli launch \
@@ -172,6 +172,7 @@ wlheadless-run -c cage -- \
   --game-args="-server" \
   --game-args="-dataPath" \
   --game-args="ModData/Default" \
-  plants-vs-zombies-garden-warfare-2 / plants-vs-zombies-garden-warfare / pvz-battle-for-neighborville
+  plants-vs-zombies-garden-warfare-2
 ```
+
 
