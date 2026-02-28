@@ -59,8 +59,6 @@ Windows Registry Editor Version 5.00
 "UninstallString"="\"C:\\Program Files\\Common FilesEAInstaller\\Plants vs Zombies Garden Warfare\\Cleanup.exe\" uninstall_game -autologging"
 "URLInfoAbout"="http://www.ea.com"
 
-Windows Registry Editor Version 5.00
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PopCap\Plants vs Zombies Garden Warfare]
 "GDFBinary"="Z:\\opt\\games\\gw1\\GDFBinary_en_US.dll"
 "DisplayName"="PVZ Garden Warfare"
