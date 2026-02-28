@@ -29,7 +29,7 @@ Windows Registry Editor Version 5.00
 "Locale"="en_US"
 "Product GUID"="{A5AC7D7B-C1D5-4AF9-8829-993DA335BE1B}"
 
-[HKEY_LOCAL_MACHINE\Software\Wow6432Node\EA Games\Plants vs Zombies Garden Warfare1\InstallOptSelect]
+[HKEY_LOCAL_MACHINE\Software\Wow6432Node\EA Games\Plants vs Zombies Garden Warfare\InstallOptSelect]
 @="1"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Origin]
@@ -51,7 +51,7 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{335B50BC-6130-4BAF-9A6A-F1561270587B}]
 "DisplayIcon"="\"Z:\\opt\\games\\gw1\\PVZ.Main_Win64_Retail.exe\""
 "DisplayName"="Plants vs. Zombies™ Garden Warfare Digital Deluxe"
-"DisplayVersion"="1.0.78.30969"
+"DisplayVersion"="1.0.3.0"
 "EstimatedSize"=dword:000ed365
 "HelpLink"="Z:\\opt\\games\\gw1\\Support\\EA Help\\Technical Support.en_US.rtf"
 "InstallLocation"="Z:\\opt\\games\\gw1\\"
