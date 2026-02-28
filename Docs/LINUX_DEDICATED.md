@@ -33,7 +33,7 @@ On the machine that will host the dedicated server, execute the following comman
 mkdir -p $HOME/Games
 mkdir -p $HOME/.local/share/Steam/compatibilitytools.d
 git clone https://github.com/nocss42/GardenGate
-cd MARNE
+cd GardenGate/Container
 vim auth.toml   # Paste the contents from your main machine
 vim tmux.conf   # Optional (uncomment from Containerfile if used)
 podman build --no-cache -t gardengate:latest .
@@ -174,5 +174,6 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2
 ```
+
 
 
