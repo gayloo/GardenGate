@@ -30,7 +30,7 @@ Put the one of your choice to game's directory and name it as `level_loader.dll`
 
 4. Open up the launcher go to patcher and press auto detect > patch (keep the ip section empty)
 
-5. Host any map of your choice through the multiplayer portal
+5. Host any map of your choice through the multiplayer portal / offline level loader
 
 ### Battle for Neighborville
 
