@@ -72,7 +72,7 @@ sudo chmod 777 /opt/games
 mkdir -p /opt/games/gw2
 ```
 
-Run Maxima setup:
+Install the game via maxima:
 
 ```sh
 wlheadless-run -c cage -- $HOME/maxima.sh
@@ -85,15 +85,11 @@ wlheadless-run -c cage -- $HOME/maxima.sh
 Import required registry files:
 
 ```sh
-PROTONPATH=$HOME/.local/share/maxima/wine/proton \
-WINEPREFIX=$HOME/.local/share/maxima/wine/prefix \
 umu-run $HOME/.local/share/maxima/wine/prefix/drive_c/windows/syswow64/regedit.exe \
 $HOME/dll_overrides.reg
 ```
 
 ```sh
-PROTONPATH=$HOME/.local/share/maxima/wine/proton \
-WINEPREFIX=$HOME/.local/share/maxima/wine/prefix \
 umu-run $HOME/.local/share/maxima/wine/prefix/drive_c/windows/syswow64/regedit.exe \
 $HOME/gw2.reg
 ```
@@ -128,8 +124,8 @@ Launch the server:
 
 ```sh
 wlheadless-run -c cage -- maxima-cli launch \
-  --game-path /opt/games/gw2/bf1.exe \
-  --game-args=-mserver battlefield-1
+  --game-path /opt/games/gw2/GW2.Main_Win64_Retail.exe \
+  --game-args=-server plants-vs-zombies-garden-warfare-2
 ```
 
 ### Installing mods
@@ -175,6 +171,3 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2 / plants-vs-zombies-garden-warfare / pvz-battle-for-neighborville
 ```
-
-
-
