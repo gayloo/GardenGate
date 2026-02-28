@@ -27,11 +27,11 @@ Check if it's been added to the what's not done part of [README](../README.md)
 ### Do I need every mod the server I'm joining has?
 For small client sided mods like FOV changer not really, but big mods like project visionary will make it crash if you don't have them installed.
 
-### Is there a way to host this as a dedicated server?
-Yes. You can find dedicated server docs [here](./HOSTING_DEDICATED.md) & [here](./LINUX_DEDICATED.md)
+### Is there a way to host this as a dedicated server on linux/windows?
+Yes. For linux [see this](./LINUX_DEDICATED.md) . If you'd like to run a server on windows just use wsl to run podman or just setup the game how you would normally (installing ea app/maxima & frosty) and use -server launch arguement. 
 
-### Who made the server dll for this?
-@sonicrat did the whole thing
+### Who made the DLL for this?
+@sonicrat did the whole thing.
 
 ### How do I contribute?
 1. Fork the repository.
