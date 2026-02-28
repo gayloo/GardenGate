@@ -135,6 +135,9 @@ Get a VPS with RDP setup or use waypipe (Frosty CLI is still way too WIP to be o
 Download frosty inside the container like so (these are here for reference don't actually run them)
 
 ```sh
+# GW1
+wget -O /opt/games/GW1_FrostyModManager.zip https://github.com/Twig6943/FrostyToolsuiteGW1Linux/releases/latest/download/PVZGW_FrostyModManager.zip
+unzip /opt/games/GW1_FrostyModManager.zip -d /opt/games
 # GW2
 wget -O /opt/games/GW2_FrostyModManager.tar.gz https://www.nexusmods.com/masseffectandromeda/mods/1190?tab=files&file_id=6904
 unzip /opt/games/GW2_FrostyModManager.zip -d /opt/games
@@ -171,3 +174,4 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2 / plants-vs-zombies-garden-warfare / pvz-battle-for-neighborville
 ```
+
