@@ -2,6 +2,11 @@ Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\Software\EA]
 
+[HKEY_LOCAL_MACHINE\Software\EA\AC]
+
+[HKEY_LOCAL_MACHINE\Software\EA\AC\Installs]
+"bf1"=dword:00000001
+
 [HKEY_LOCAL_MACHINE\Software\EA Games]
 
 [HKEY_LOCAL_MACHINE\Software\EA Games\Battlefield 1]
