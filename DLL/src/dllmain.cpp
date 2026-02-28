@@ -14,6 +14,8 @@
 #include "core/Util.h"
 #include "core/Offsets.h"
 
+#pragma comment(lib, "Ws2_32.lib")
+
 using DirectInput8Create_t = HRESULT(WINAPI*)(HINSTANCE, DWORD, REFIID, LPVOID*, LPUNKNOWN);
 DirectInput8Create_t g_originalDirectInput8Create = nullptr;
 
@@ -28,6 +30,22 @@ extern "C" __declspec(dllexport) HRESULT WINAPI DirectInput8Create(HINSTANCE hin
 
 inline bool CheckGameId(uintptr_t appIdPtr, std::string_view prefix) {
     return appIdPtr && std::string_view(reinterpret_cast<const char*>(appIdPtr)).starts_with(prefix);
+}
+
+void wsaStartup()
+{
+    WSADATA wsaData;
+    int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+
+    if (result != 0)
+    {
+        GG_LOG(GG::LogLevel::Error, "WSAStartup failed: %d\n", result);
+        return;
+    }
+
+    GG_LOG(GG::LogLevel::Info, "Winsock ready (version %d.%d)\n",
+        LOBYTE(wsaData.wVersion),
+        HIBYTE(wsaData.wVersion));
 }
 
 void Initialize() {
@@ -95,6 +113,8 @@ DWORD WINAPI ggThread(LPVOID hInstance) {
     g_game.reset();
     g_program.reset();
 
+    WSACleanup();
+
     FreeLibraryAndExitThread(reinterpret_cast<HINSTANCE>(hInstance), 0);
 }
 
@@ -125,6 +145,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved [[ma
             std::cerr << "Failed to hook dinput8.dll" << std::endl;
 
         Initialize();
+        wsaStartup();
 
         HANDLE threadHandle = CreateThread(nullptr, 0, ggThread, hinstDLL, 0, nullptr);
         if (threadHandle) CloseHandle(threadHandle);
