@@ -1,4 +1,4 @@
-# Running dedicated server on GNU/Linux
+# Running dedicated server on Linux
 
 ### Prerequisites
 
@@ -23,7 +23,7 @@ After logging in, locate the generated `auth.toml` file:
 * Linux:
   `$HOME/.local/share/maxima`
 
-Copy the contents of `auth.toml` into the same `auth.toml` inside the MARNE repository.
+Copy the contents of `auth.toml` into the same `auth.toml` inside the repository.
 
 ### Podman Setup
 
@@ -175,5 +175,6 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2 / plants-vs-zombies-garden-warfare / pvz-battle-for-neighborville
 ```
+
 
 
