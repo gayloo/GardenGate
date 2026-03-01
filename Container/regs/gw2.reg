@@ -62,5 +62,5 @@ Windows Registry Editor Version 5.00
 "HelpLink"="Z:\\opt\\games\\gw2\\Support\\EA Help\\Technical Support.en_US.rtf"
 "InstallLocation"="Z:\\opt\\games\\gw2\\"
 "Publisher"="Electronic Arts"
-"UninstallString"="\"C:\\Program Files\\Common FilesEAInstaller\\Battlefield 1\\Cleanup.exe\" uninstall_game -autologging"
+"UninstallString"="\"C:\\Program Files\\Common FilesEAInstaller\\Plants vs Zombies GW2\\Cleanup.exe\" uninstall_game -autologging"
 "URLInfoAbout"="http://www.ea.com"
