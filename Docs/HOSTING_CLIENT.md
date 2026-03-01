@@ -1,4 +1,4 @@
-# Hosting
+# Hosting via client
 
 ### Garden warfare 1
 
