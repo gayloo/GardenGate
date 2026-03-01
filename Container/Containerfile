@@ -1,9 +1,10 @@
 FROM ubuntu:24.04
 
-# Ports
+# Main port
 EXPOSE 25200/tcp
 EXPOSE 25200/udp
 
+# Fallback port
 EXPOSE 25201/tcp
 EXPOSE 25201/udp
 
