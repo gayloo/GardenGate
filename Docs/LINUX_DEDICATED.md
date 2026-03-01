@@ -143,7 +143,7 @@ unzip /opt/games/GW1_FrostyModManager.zip -d /opt/games
 # GW2
 wget -O /opt/games/GW2_FrostyModManager.zip https://github.com/nocss42/GardenGate/releases/download/frosty.mirror/FrostyModManager-1190-1-0-6-3-s-1753719610.zip
 mkdir -p /opt/games/GW2_Frosty
-unzip /opt/games/GW2_FrostyModManager.zip -d /opt/games/GW2_Frosty
+unzip /opt/games/GW2_FrostyModManager.zip -d /opt/games/GW2_FrostyModManager
 # BFN
 wget -O /opt/games/BFN_FrostyModManager.zip https://github.com/Twig6943/FrostyToolsuiteBFNLinux/releases/latest/download/FrostyModManager.zip
 unzip /opt/games/BFN_FrostyModManager.zip -d /opt/games
@@ -177,5 +177,3 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2
 ```
-
-
