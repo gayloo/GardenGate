@@ -130,7 +130,7 @@ wlheadless-run -c cage -- maxima-cli launch \
   --game-args=-server plants-vs-zombies-garden-warfare-2
 ```
 
-### Installing mods
+### Installing mods (Required for gw2)
 
 Get a VPS with RDP setup or use waypipe (Frosty CLI is still way too WIP to be of use)
 
@@ -176,11 +176,3 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2
 ```
-
-
-
-
-
-
-
-
