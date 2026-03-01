@@ -11,7 +11,7 @@ public:
     void initialize() {
         AllocConsole();
         SetConsoleTitleA(GG_CONSOLE_TITLE);
-        freopen_s((FILE**)stdout, "CONOUT$", "w", stdout);
+        freopen_s((FILE**)stdout, "gg.txt", "w", stdout);
 
         HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
         DWORD mode = 0;
