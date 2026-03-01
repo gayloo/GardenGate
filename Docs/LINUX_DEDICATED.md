@@ -134,14 +134,14 @@ wlheadless-run -c cage -- maxima-cli launch \
 
 Get a VPS with RDP setup or use waypipe (Frosty CLI is still way too WIP to be of use)
 
-Download frosty inside the container like so (these are here for reference don't actually run them)
+Download frosty inside the container like so
 
 ```sh
 # GW1
 wget -O /opt/games/GW1_FrostyModManager.zip https://github.com/Twig6943/FrostyToolsuiteGW1Linux/releases/latest/download/PVZGW_FrostyModManager.zip
 unzip /opt/games/GW1_FrostyModManager.zip -d /opt/games
 # GW2
-wget -O /opt/games/GW2_FrostyModManager.tar.gz https://www.nexusmods.com/masseffectandromeda/mods/1190?tab=files&file_id=6904
+wget -O /opt/games/GW2_FrostyModManager.zip https://github.com/nocss42/GardenGate/releases/download/frosty.mirror/FrostyModManager-1190-1-0-6-3-s-1753719610.zip
 unzip /opt/games/GW2_FrostyModManager.zip -d /opt/games
 # BFN
 wget -O /opt/games/BFN_FrostyModManager.zip https://github.com/Twig6943/FrostyToolsuiteBFNLinux/releases/latest/download/FrostyModManager.zip
@@ -176,3 +176,4 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2
 ```
+
