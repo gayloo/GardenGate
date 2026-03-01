@@ -164,3 +164,21 @@
 | Placeholder            | Mode_SocialSpace                 |
 | Placeholder            | Mode_Competitive_24              |
 
+# HubSeasons
+| Id                     | Name                             |
+|------------------------|----------------------------------|
+| -1                     | NoSelectect                      |
+| 0                      | Default                          |
+| 1                      | DefaultNight                     |
+| 2                      | LawnOfDoom                       |
+| 3                      | FoodFight                        |
+| 4                      | Feastivus                        |
+| 5                      | SnowDay                          |
+| 6                      | Valenbrainz                      |
+| 7                      | LuckOfTheZombie                  |
+| 8                      | Springening                      |
+| 9                      | BirthdayZ                        |
+| 10                     | SummerNights                     |
+| 11                     | SummerDayz                       |
+| 12                     | Default (September)              |
+| 13                     | Placeholder                      |
