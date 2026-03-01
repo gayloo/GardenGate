@@ -15,7 +15,7 @@ Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\Software\EA Games]
 
-[HKEY_LOCAL_MACHINE\Software\EA Games\Battlefield 1]
+[HKEY_LOCAL_MACHINE\Software\EA Games\Plants vs Zombies GW2]
 "DisplayName"="Plants vs Zombies GW2"
 "Install Dir"="Z:\\opt\\games\\gw2\\"
 "Locale"="en_US"
@@ -32,13 +32,13 @@ Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\Software\Wow6432Node\EA Games]
 
-[HKEY_LOCAL_MACHINE\Software\Wow6432Node\EA Games\Battlefield 1]
-"DisplayName"="Battlefield™ 1"
-"Install Dir"="Z:\\opt\\games\\bf1\\"
+[HKEY_LOCAL_MACHINE\Software\Wow6432Node\EA Games\Plants vs Zombies GW2]
+"DisplayName"="Plants vs Zombies GW2"
+"Install Dir"="Z:\\opt\\games\\gw2\\"
 "Locale"="en_US"
 "Product GUID"="{C4F00C98-13B4-4313-8152-50EE0B04ABE2}"
 
-[HKEY_LOCAL_MACHINE\Software\Wow6432Node\EA Games\Battlefield 1\InstallOptSelect]
+[HKEY_LOCAL_MACHINE\Software\Wow6432Node\EA Games\Plants vs Zombies GW2\InstallOptSelect]
 @="1"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Origin Games\1026482]
@@ -55,12 +55,12 @@ Windows Registry Editor Version 5.00
 "InstallSuccessful"="true"
 
 [HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{C4F00C98-13B4-4313-8152-50EE0B04ABE2}]
-"DisplayIcon"="\"Z:\\opt\\games\\bf1\\bf1.exe\""
-"DisplayName"="Battlefield™ 1"
-"DisplayVersion"="1.0.78.30969"
+"DisplayIcon"="\"Z:\\opt\\games\\gw2\\GW2.Main_Win64_Retail.exe\""
+"DisplayName"="Plants vs. Zombies™ Garden Warfare 2: Deluxe Edition"
+"DisplayVersion"="1.0.13.0"
 "EstimatedSize"=dword:000ed365
-"HelpLink"="Z:\\opt\\games\\bf1\\Support\\EA Help\\Technical Support.en_US.rtf"
-"InstallLocation"="Z:\\opt\\games\\bf1\\"
+"HelpLink"="Z:\\opt\\games\\gw2\\Support\\EA Help\\Technical Support.en_US.rtf"
+"InstallLocation"="Z:\\opt\\games\\gw2\\"
 "Publisher"="Electronic Arts"
 "UninstallString"="\"C:\\Program Files\\Common FilesEAInstaller\\Battlefield 1\\Cleanup.exe\" uninstall_game -autologging"
 "URLInfoAbout"="http://www.ea.com"
