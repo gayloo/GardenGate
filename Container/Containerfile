@@ -5,8 +5,8 @@ EXPOSE 25200/tcp
 EXPOSE 25200/udp
 
 # Fallback port
-EXPOSE 25201/tcp
-EXPOSE 25201/udp
+EXPOSE 27200/tcp
+EXPOSE 27200/udp
 
 # Env vars
 ENV DEBIAN_FRONTEND=noninteractive
