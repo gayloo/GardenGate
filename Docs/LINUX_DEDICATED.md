@@ -47,8 +47,8 @@ Run the container with:
 podman run --replace -it \
   --name gardengate \
   -v $HOME/Games:/opt/games \
+  -p 25200:25200/tcp \
   -p 25200:25200/udp \
-  -p 11079:11079/tcp \
   --security-opt seccomp=unconfined \
   gardengate:latest
 ```
@@ -174,6 +174,7 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2
 ```
+
 
 
 
