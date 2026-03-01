@@ -2,8 +2,12 @@
 
 ### Universal
 ```
--Window.Fullscreen true/false
--GameTime.MaxSimFps 120
+-name
+-dataPath
+-Client.ServerIp
+-Server.ServerPassword
+-Window.Fullscreen
+-GameTime.MaxSimFps
 ```
 
 ### GW1
