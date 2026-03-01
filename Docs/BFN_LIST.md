@@ -167,7 +167,7 @@
 # HubSeasons
 | Id                     | Name                             |
 |------------------------|----------------------------------|
-| -1                     | NoSelectect                      |
+| -1                     | NoSelected                       |
 | 0                      | Default                          |
 | 1                      | DefaultNight                     |
 | 2                      | LawnOfDoom                       |
