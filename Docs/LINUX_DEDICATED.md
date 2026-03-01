@@ -152,10 +152,10 @@ Outside of podman, install umu and ge-proton for your distro like so (these comm
 
 ```sh
 export PROTON_ENABLE_WAYLAND=1 # If you're on a wayland session
-export PROTONPATH=$HOME/.local/share/Steam/compatibilitytools.d/GE-Proton10-32
+export PROTONPATH=$HOME/.local/share/maxima/wine/proton
 
 wget -O $HOME/ge-proton.tar.gz https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton10-32/GE-Proton10-32.tar.gz
-tar -xzf $HOME/ge-proton.tar.gz -C "$HOME/.local/share/Steam/compatibilitytools.d"
+tar -xzf $HOME/ge-proton.tar.gz -C "$HOME/.local/share/maxima/wine/proton"
 
 sudo dpkg --add-architecture i386 # needed for debian-based
 
@@ -176,6 +176,7 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2
 ```
+
 
 
 
