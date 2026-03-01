@@ -4,6 +4,9 @@ FROM ubuntu:24.04
 EXPOSE 25200/tcp
 EXPOSE 25200/udp
 
+EXPOSE 25201/tcp
+EXPOSE 25201/udp
+
 # Env vars
 ENV DEBIAN_FRONTEND=noninteractive
 ENV RUSTFLAGS="-C target-feature=+crt-static"
