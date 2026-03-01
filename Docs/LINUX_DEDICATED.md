@@ -134,6 +134,16 @@ wlheadless-run -c cage -- maxima-cli launch \
 
 Get a VPS with RDP setup or use waypipe (Frosty CLI is still way too WIP to be of use)
 
+### Depending on the specs of the vps (8gb ram or lower) you might need to add swap like so in order for it to not crash during the initial caching process.
+
+```sh
+sudo fallocate -l 8G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile none swap defaults 0 0' | sudo tee -a /etc/fstab > /dev/null
+```
+
 Download frosty inside the container like so
 
 ```sh
@@ -177,5 +187,3 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2
 ```
-
-
