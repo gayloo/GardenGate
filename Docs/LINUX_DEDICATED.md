@@ -49,6 +49,8 @@ podman run --replace -it \
   -v $HOME/Games:/opt/games \
   -p 25200:25200/tcp \
   -p 25200:25200/udp \
+  -p 25200:25201/tcp \
+  -p 25200:25201/udp \
   --security-opt seccomp=unconfined \
   gardengate:latest
 ```
@@ -174,6 +176,7 @@ wlheadless-run -c cage -- \
   --game-args="ModData/Default" \
   plants-vs-zombies-garden-warfare-2
 ```
+
 
 
 
