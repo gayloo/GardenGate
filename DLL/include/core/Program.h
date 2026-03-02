@@ -13,7 +13,7 @@ public:
     {
         AllocConsole();
         SetConsoleTitleA(GG_CONSOLE_TITLE);
-        freopen_s((FILE**)stdout, "gg.txt", "w", stdout);
+        freopen_s((FILE**)stdout, "gg_server.txt", "w", stdout);
 
         HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
         DWORD mode = 0;
