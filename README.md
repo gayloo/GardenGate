@@ -41,7 +41,7 @@ Experimental private servers for Plants vs. Zombies Garden Warfare 1,2 & Battle 
 
 ## Credits
 
-- RaT
+- sonicrat
 
 - nocss
 

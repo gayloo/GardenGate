@@ -34,13 +34,6 @@ jobs:
           sudo -u builder sh <<'EOF'
           set -e
           cd DLL
-          git clone https://github.com/TsudaKageyu/minhook
-          sh -c "
-            cmake -S minhook -B build-minhook \
-            -DCMAKE_TOOLCHAIN_FILE=../toolchain-mingw64.cmake
-          "
-          cmake --build build-minhook
-          mv -f build-minhook/minhook.x64.a thirdparty/MinHook
           mkdir build-gg
           cd build-gg
           sh -c "

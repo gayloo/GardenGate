@@ -1,6 +1,16 @@
 cmake_minimum_required(VERSION 3.24)
 project(GardenGate VERSION 0.1.2 LANGUAGES CXX)
 
+include(FetchContent)
+
+FetchContent_Declare(
+  minhook
+  GIT_REPOSITORY https://github.com/TsudaKageyu/minhook.git
+  GIT_TAG 1e9ad1eb42db11bfcb65461f687c656612d1b555
+)
+
+FetchContent_MakeAvailable(minhook)
+
 add_library(${PROJECT_NAME} SHARED)
 
 # Language / standard
@@ -19,8 +29,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 # Includes
 target_include_directories(${PROJECT_NAME} PRIVATE
   "${CMAKE_CURRENT_SOURCE_DIR}/include"
-  "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/MinHook"
-  "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/imgui"
 )
 
 # Warnings (Add back -Werror when those get fixed)
@@ -31,24 +39,17 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 )
 
 # Libraries
-if (MINGW)
-  target_link_libraries(${PROJECT_NAME} PRIVATE
+target_link_libraries(${PROJECT_NAME} PRIVATE
     ws2_32
-    "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/MinHook/minhook.x64.a"
+    minhook
   )
-elseif (MSVC)
-  target_link_libraries(${PROJECT_NAME} PRIVATE
-    ws2_32.lib
-    "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/MinHook/libMinHook-x64-v141-mt.lib"
-  )
-endif()
 
 # Output
 set_target_properties(${PROJECT_NAME} PROPERTIES
   OUTPUT_NAME "dinput8"
 )
 if (MINGW)
-  set_target_properties(${PROJECT_NAME} PROPERTIES
+    set_target_properties(${PROJECT_NAME} PROPERTIES
     PREFIX ""
     IMPORT_PREFIX ""
   )

@@ -1,41 +1,44 @@
 # Launch args
 
+Here you can find launch arguements with their examples/defaults.
+
 ### Universal
 ```
--name
--dataPath
--Client.ServerIp
--Server.ServerPassword
--Window.Fullscreen
--GameTime.MaxSimFps
+-name Player
+-dataPath ModData/Default
+-Client.ServerIp 127.0.0.1:25200
+-Server.ServerPassword 123456
+-Window.Fullscreen true
+-GameTime.MaxSimFps 60
 -listen
 ```
 
 ### GW1
 ```
--level
--Game.DefaultLayerInclusion
--Network.ServerPort
--PerfOverlay.DrawFps true
--PVZServer.InActivityTimeOut -1
+-level _pvz/Levels/Coastal/Level_COOP_Coastal/Level_COOP_Coastal
+-Game.DefaultLayerInclusion GameMode=Coop0
+-Network.ServerPort 25200
+-PerfOverlay.DrawFps false
+-PVZServer.InActivityTimeOut 180
 -SyncedBFSettings.AllUnlocksUnlocked true
 ```
 
 ### GW2
 ```
--level
--Game.DefaultLayerInclusion
--Network.ServerPort
--PerfOverlay.DrawFps true
--PVZServer.InActivityTimeOut -1
--GameMode.SkipIntroHubNIS true
+-level Levels/Level_FE_Hub/Level_FE_Hub
+-Game.DefaultLayerInclusion GameMode=FreeRoam
+-Network.ServerPort 25200
+-PerfOverlay.DrawFps false
+-PVZServer.InActivityTimeOut 180
+-GameMode.SkipIntroHubNIS false
 -Online.OnlineGameInteractionMasterKillSwitch true
--SyncedBFSettings.AllUnlocksUnlocked true
+-SyncedBFSettings.AllUnlocksUnlocked false
 ```
 
 ### BFN
 ```
--GameSettings.InitialDSubLevel
--GameSettings.StartPoint
--GameSettings.DefaultLayerInclusion
+-GameSettings.InitialDSubLevel Levels/DSub_SocialSpace/DSub_SocialSpace
+-GameSettings.StartPoint StartPoint_SocialSpace
+-GameSettings.DefaultLayerInclusion GameMode=Mode_SocialSpace;HostedMode=PeerHosted
+-NetObjectSystem.MaxServerConnectionCount 4
 ```
