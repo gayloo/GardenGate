@@ -1,4 +1,12 @@
+#include <windows.h>
+#include <shellapi.h>
+#include <shlobj.h>
+#include <shlwapi.h>
+#include <tlhelp32.h>
+#include <process.h>
+
 #include "Utils.hpp"
+#include "Patcher.hpp"
 
 #include <fstream> 
 #include <filesystem>
@@ -7,11 +15,9 @@
 #include <cctype>
 #include <iomanip>
 #include <sstream>
-#include <shlobj.h>
-#include <shellapi.h>
-#include <shlwapi.h>
-#include <process.h>
-#include <tlhelp32.h>
+#include <string>
+#include <vector>
+#include <cstring>
 
 namespace fs = std::filesystem;
 
@@ -135,6 +141,18 @@ namespace Utils {
 			float offset = (safeWidth - width) / 2.0f;
 			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset);
 			return ImGui::Button(label, ImVec2(width, 38.0f * dpiScale));
+		}
+
+		namespace Status {
+			static StatusMessage currentStatus;
+
+			void Show(const std::string& text, bool isError, float duration) {
+				currentStatus = StatusMessage(text, isError, duration);
+			}
+
+			const StatusMessage& GetCurrent() {
+				return currentStatus;
+			}
 		}
 	}
 
@@ -647,6 +665,23 @@ namespace Utils {
 
 			return lr;
 		}
+
+		static std::vector<std::string> GetCommandLineArgs() {
+			int argc = 0;
+			LPWSTR* argvW = CommandLineToArgvW(GetCommandLineW(), &argc);
+			std::vector<std::string> args;
+
+			if (argvW) {
+				for (int i = 0; i < argc; ++i) {
+					int size = WideCharToMultiByte(CP_UTF8, 0, argvW[i], -1, nullptr, 0, nullptr, nullptr);
+					std::string arg(size - 1, '\0');
+					WideCharToMultiByte(CP_UTF8, 0, argvW[i], -1, &arg[0], size, nullptr, nullptr);
+					args.push_back(arg);
+				}
+				LocalFree(argvW);
+			}
+			return args;
+		}
 	}
 
 	namespace FileUtil {
@@ -679,3 +714,4 @@ namespace Utils {
 		}
 	}
 }
+
