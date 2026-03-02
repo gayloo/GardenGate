@@ -6,7 +6,7 @@ namespace fb
 {
 struct LevelSetupOption
 {
-    LevelSetupOption() {};
+    LevelSetupOption(){};
 
     String m_criterion;
     String m_value;
