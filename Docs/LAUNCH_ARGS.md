@@ -8,6 +8,7 @@
 -Server.ServerPassword
 -Window.Fullscreen
 -GameTime.MaxSimFps
+-listen
 ```
 
 ### GW1

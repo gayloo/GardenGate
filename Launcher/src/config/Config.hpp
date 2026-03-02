@@ -3,7 +3,7 @@
 #include <vector>
 #include <imgui.h>
 
-#include "json.hpp"
+#include <nlohmann/json.hpp>
 
 struct GameConfig {
     std::string game_path;

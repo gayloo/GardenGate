@@ -306,9 +306,10 @@ CMakeCache.txt
 Makefile
 CMakeFiles/
 my_msvc/
+_deps/
 
 DLL/minhook/
 DLL/build/
 DLL/build-minhook/
 DLL/build-gg/
-DLL/build-launcher/
+Launcher/build-launcher/
