@@ -1,6 +1,7 @@
 ﻿#include "Launcher.hpp"
 #include "Renderer.hpp"
 #include "config/Config.hpp"
+#include "utils/Utils.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -12,6 +13,11 @@ Config g_config;
 
 int Launcher::Run()
 {
+    if (Utils::Process::handleCLI())
+    {
+        return 0;
+    }
+
     g_config = load_config("config.json");
 
     Renderer::Run();
