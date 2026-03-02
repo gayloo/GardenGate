@@ -1,4 +1,12 @@
+#include <windows.h>
+#include <shellapi.h>
+#include <shlobj.h>
+#include <shlwapi.h>
+#include <tlhelp32.h>
+#include <process.h>
+
 #include "Utils.hpp"
+#include "Patcher.hpp"
 
 #include <fstream> 
 #include <filesystem>
@@ -7,11 +15,9 @@
 #include <cctype>
 #include <iomanip>
 #include <sstream>
-#include <shlobj.h>
-#include <shellapi.h>
-#include <shlwapi.h>
-#include <process.h>
-#include <tlhelp32.h>
+#include <string>
+#include <vector>
+#include <cstring>
 
 namespace fs = std::filesystem;
 
@@ -135,6 +141,18 @@ namespace Utils {
 			float offset = (safeWidth - width) / 2.0f;
 			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset);
 			return ImGui::Button(label, ImVec2(width, 38.0f * dpiScale));
+		}
+
+		namespace Status {
+			static StatusMessage currentStatus;
+
+			void Show(const std::string& text, bool isError, float duration) {
+				currentStatus = StatusMessage(text, isError, duration);
+			}
+
+			const StatusMessage& GetCurrent() {
+				return currentStatus;
+			}
 		}
 	}
 
@@ -647,6 +665,103 @@ namespace Utils {
 
 			return lr;
 		}
+
+		static std::vector<std::string> GetCommandLineArgs() {
+			int argc = 0;
+			LPWSTR* argvW = CommandLineToArgvW(GetCommandLineW(), &argc);
+			std::vector<std::string> args;
+
+			if (argvW) {
+				for (int i = 0; i < argc; ++i) {
+					int size = WideCharToMultiByte(CP_UTF8, 0, argvW[i], -1, nullptr, 0, nullptr, nullptr);
+					std::string arg(size - 1, '\0');
+					WideCharToMultiByte(CP_UTF8, 0, argvW[i], -1, &arg[0], size, nullptr, nullptr);
+					args.push_back(arg);
+				}
+				LocalFree(argvW);
+			}
+			return args;
+		}
+
+		bool handleCLI() {
+			auto args = GetCommandLineArgs();
+			if (args.size() < 3 || args[1] != "-patch") return false;
+
+			std::ofstream log("gg_launcher.log", std::ios::app);
+			auto logMsg = [&](const std::string& msg) { log << msg << std::endl; };
+
+			auto runPatchTask = [&](const std::string& id, const std::string& dir) -> bool {
+				if (dir.empty()) {
+					logMsg("No path provided or configured for " + id);
+					return false;
+				}
+
+				std::string exeName, patchPath;
+				if (id == "gw1") exeName = "PVZ.Main_Win64_Retail.exe";
+				else if (id == "gw2") {
+					exeName = "GW2.Main_Win64_Retail.exe";
+					patchPath = "gw2/GW2.Main_Win64_Retail.exe.xdelta";
+				}
+				else if (id == "bfn") {
+					exeName = "PVZBattleforNeighborville.exe";
+					patchPath = "bfn";
+				}
+
+				char pathBuf[MAX_PATH];
+				GetModuleFileNameA(NULL, pathBuf, MAX_PATH);
+				fs::path launcherDir = fs::path(pathBuf).parent_path();
+				fs::path dllSource = launcherDir / "dinput8.dll";
+				fs::path fullExePath = fs::path(dir) / exeName;
+				fs::path fullPatchPath = patchPath.empty() ? "" : (launcherDir / "patches" / patchPath);
+
+				if (!fs::exists(fullExePath)) {
+					logMsg("FAILED: " + exeName + " not found at " + dir);
+					return false;
+				}
+
+				logMsg("Patching " + id + "...");
+				std::string err;
+				bool ok = false;
+				if (id == "gw1")      ok = Patcher::AutoPatchGW1(fullExePath.string(), dllSource.string(), err);
+				else if (id == "gw2") ok = Patcher::AutoPatchGW2(fullExePath.string(), fullPatchPath.string(), dllSource.string(), err);
+				else if (id == "bfn") ok = Patcher::AutoPatchBFN(fullExePath.string(), fullPatchPath.string(), dllSource.string(), err);
+
+				logMsg(ok ? "SUCCESS" : "FAILED: " + err);
+				return ok;
+				};
+
+			Config cfg = load_config("config.json");
+			bool overallSuccess = true;
+
+			for (size_t i = 2; i < args.size(); ++i) {
+				std::string arg = args[i];
+
+				if (arg == "-all") {
+					if (!runPatchTask("gw1", cfg.gw1.game_path)) overallSuccess = false;
+					if (!runPatchTask("gw2", cfg.gw2.game_path)) overallSuccess = false;
+					if (!runPatchTask("bfn", cfg.bfn.game_path)) overallSuccess = false;
+					continue;
+				}
+
+				if (arg == "gw1" || arg == "gw2" || arg == "bfn") {
+					std::string path;
+					if (i + 1 < args.size() && args[i + 1][0] != '-	') {
+						path = args[i + 1];
+						i++;
+					}
+					else {
+						if (arg == "gw1") path = cfg.gw1.game_path;
+						else if (arg == "gw2") path = cfg.gw2.game_path;
+						else if (arg == "bfn") path = cfg.bfn.game_path;
+					}
+
+					if (!runPatchTask(arg, path)) overallSuccess = false;
+				}
+			}
+
+			logMsg("========================================");
+			return overallSuccess;
+		}
 	}
 
 	namespace FileUtil {
@@ -679,3 +794,4 @@ namespace Utils {
 		}
 	}
 }
+
