@@ -136,11 +136,41 @@ inline void print_header(LogLevel lvl, const std::source_location& loc) noexcept
     }
 }
 
+inline void rotate_logs() noexcept
+{
+    static size_t s_line_count = 0;
+
+    if (++s_line_count < 5000)
+        return;
+
+    s_line_count = 0;
+    std::fflush(stdout);
+
+    std::remove("gg_server.log.5");
+
+    for (int i = 4; i >= 1; --i)
+    {
+        std::string old_name = "gg_server.log." + std::to_string(i);
+        std::string new_name = "gg_server.log." + std::to_string(i + 1);
+        std::rename(old_name.c_str(), new_name.c_str());
+    }
+
+    std::rename("gg_server.log", "gg_server.log.1");
+
+    FILE* dummy;
+    if (freopen_s(&dummy, "gg_server.log", "w", stdout) != 0)
+    {
+        std::printf("Warning: Failed to rotate log file\n");
+    }
+}
+
 template<class... Args>
 inline void vlogf(LogLevel lvl, const std::source_location& loc, const char* fmt, Args&&... args) noexcept
 {
     if (!should_log(lvl))
         return;
+
+    rotate_logs();
 
     print_header(lvl, loc);
     std::printf(fmt, std::forward<Args>(args)...);
