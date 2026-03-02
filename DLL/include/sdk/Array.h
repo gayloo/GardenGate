@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <stdexcept>
 
-template <class T>
+template<class T>
 class Array final
 {
 public:
@@ -11,8 +11,7 @@ public:
 
     [[nodiscard]] std::int32_t size() const noexcept
     {
-        return *reinterpret_cast<const std::int32_t*>(
-            reinterpret_cast<const std::byte*>(m_data) - 4);
+        return *reinterpret_cast<const std::int32_t*>(reinterpret_cast<const std::byte*>(m_data) - 4);
     }
 
     T& operator[](size_type i)
@@ -27,12 +26,25 @@ public:
         return m_data[i];
     }
 
-    T* begin() noexcept { return m_data; }
-    T* end() noexcept { return m_data + static_cast<size_type>(size()); }
-    const T* begin() const noexcept { return m_data; }
-    const T* end() const noexcept { return m_data + static_cast<size_type>(size()); }
+    T* begin() noexcept
+    {
+        return m_data;
+    }
+    T* end() noexcept
+    {
+        return m_data + static_cast<size_type>(size());
+    }
+    const T* begin() const noexcept
+    {
+        return m_data;
+    }
+    const T* end() const noexcept
+    {
+        return m_data + static_cast<size_type>(size());
+    }
 
-    void set(T* ptr) {
+    void set(T* ptr)
+    {
         m_data = ptr;
     }
 
@@ -41,12 +53,15 @@ public:
         const std::size_t bytes = 4 + sizeof(T) * capacity;
 
         auto* base = static_cast<std::byte*>(::operator new(bytes, std::nothrow));
-        if (!base) { m_data = nullptr; return; }
+        if (!base)
+        {
+            m_data = nullptr;
+            return;
+        }
 
         *reinterpret_cast<std::int32_t*>(base) = 0;
         m_data = reinterpret_cast<T*>(base + 4);
     }
-
 
 private:
     void check(size_type i) const
