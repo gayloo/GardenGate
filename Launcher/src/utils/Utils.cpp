@@ -666,22 +666,6 @@ namespace Utils {
 			return lr;
 		}
 
-		static std::vector<std::string> GetCommandLineArgs() {
-			int argc = 0;
-			LPWSTR* argvW = CommandLineToArgvW(GetCommandLineW(), &argc);
-			std::vector<std::string> args;
-
-			if (argvW) {
-				for (int i = 0; i < argc; ++i) {
-					int size = WideCharToMultiByte(CP_UTF8, 0, argvW[i], -1, nullptr, 0, nullptr, nullptr);
-					std::string arg(size - 1, '\0');
-					WideCharToMultiByte(CP_UTF8, 0, argvW[i], -1, &arg[0], size, nullptr, nullptr);
-					args.push_back(arg);
-				}
-				LocalFree(argvW);
-			}
-			return args;
-		}
 	}
 
 	namespace FileUtil {
