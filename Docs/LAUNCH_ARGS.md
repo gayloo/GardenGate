@@ -2,6 +2,8 @@
 
 Here you can find launch arguements with their examples/defaults.
 
+Please keep in mind some args here are tied to the `dinput8.dll`
+
 ### Universal
 ```
 -name Player
@@ -41,4 +43,5 @@ Here you can find launch arguements with their examples/defaults.
 -GameSettings.StartPoint StartPoint_SocialSpace
 -GameSettings.DefaultLayerInclusion GameMode=Mode_SocialSpace;HostedMode=PeerHosted
 -NetObjectSystem.MaxServerConnectionCount 4
+-GameModeSettings.ForceHUBSeason 0
 ```
