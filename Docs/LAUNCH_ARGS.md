@@ -9,10 +9,10 @@ Please keep in mind some args here are tied to the `dinput8.dll`
 -name Player
 -dataPath ModData/Default
 -Client.ServerIp 127.0.0.1:25200
+-listen 0.0.0.0:25200
 -Server.ServerPassword 123456
 -Window.Fullscreen true
 -GameTime.MaxSimFps 60
--listen
 ```
 
 ### GW1
