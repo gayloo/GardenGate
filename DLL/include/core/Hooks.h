@@ -659,7 +659,9 @@ intptr_t ServerStart(intptr_t inst, ServerSpawnInfo& info, ServerSpawnOverrides*
     gameModeSettings->ShouldSkipHUBTutorial = true;
     gameModeSettings->SocialHUBSkipStationTutorials = true;
     gameModeSettings->SocialHUBSkipLandingPage = true;
-
+    auto hubSeason = GetOptionParameter("GameModeSettings.ForceHUBSeason", "", 0);
+    if (hubSeason[0] != '\0')
+        gameModeSettings->ForceHUBSeason = atoi(hubSeason);
     return trampoline(inst, info, spawnOverrides, socketManager);
 }
 
