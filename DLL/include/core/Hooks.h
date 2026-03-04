@@ -325,8 +325,8 @@ intptr_t initSettings(intptr_t inst)
     gameSettings->Platform = GamePlatform_Win32;
     onlineSettings->Backend = Backend_Local;
     onlineSettings->PeerBackend = Backend_LocalNoStorage;
-    onlineSettings->ClientIsPresenceEnabled = false;
-    onlineSettings->ServerIsPresenceEnabled = false;
+    onlineSettings->ClientIsPresenceEnabled = true;
+    onlineSettings->ServerIsPresenceEnabled = true;
     onlineSettings->OnlineGameInteractionMasterKillSwitch = true;
     onlineSettings->OnlineGameInteractionKillSwitchList = reinterpret_cast<char*>(offsets::gw2::g_EmptyArray);
     networkSettings->MaxClientCount = 64;
