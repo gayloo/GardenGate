@@ -6,7 +6,7 @@
 
 ### You only need to install mods if you're hosting a server or joining to a server that's hosted via the client)
 
-### Garden warfare 2 
+### Garden warfare 2
 [GardenGate.fbpack](../Mods/gw2/GardenGate.fbpack)
 
 Import the FBPack in Frosty Mod Manager, the load order should be something like this;

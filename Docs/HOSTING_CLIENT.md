@@ -22,7 +22,7 @@ Put the one of your choice to game's directory and name it as `level_loader.dll`
 
 1. Download the archive from [releases](https://github.com/nocss42/GardenGate/releases) 
 
-2. Download the FBPACK from the repository [here](../Mods/gw2/GardenGate_ClientHosting.fbpack)
+2. Download the FBPACK from the repository [here](../Mods/gw2/GardenGate.fbpack)
 
 3. Import the FBPack in Frosty Mod Manager, the load order should be something like this;
 
