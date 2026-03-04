@@ -1,15 +1,21 @@
 #pragma once
 #include <cstdio>
 #include <cstdlib>
+#include <memory>
 #include <source_location>
+#include <string>
 #include <string_view>
-#include <utility>
+#include <vector>
 
 #ifndef NOMINMAX
     #define NOMINMAX
 #endif
 #define _WINSOCKAPI_
 #include <windows.h>
+
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 #include "Platform.h"
 
@@ -31,6 +37,8 @@ enum class LogLevel : unsigned char
 #endif
 };
 
+namespace Log
+{
 namespace detail
 {
 #if defined(_DEBUG)
@@ -39,45 +47,27 @@ inline constexpr bool IsDebugBuild = true;
 inline constexpr bool IsDebugBuild = false;
 #endif
 
-inline constexpr std::string_view Reset = "\x1b[0m";
+inline std::shared_ptr<spdlog::logger> g_logger;
+inline bool g_console_enabled = false;
 
-[[nodiscard]] inline constexpr std::string_view LOG_LEVEL_TO_STRING(LogLevel lvl) noexcept
+[[nodiscard]] inline spdlog::level::level_enum to_spdlog(LogLevel lvl) noexcept
 {
     switch (lvl)
     {
     case LogLevel::DebugPlusPlus:
-        return "Debug++";
+        return spdlog::level::trace;
     case LogLevel::Debug:
-        return "Debug";
+        return spdlog::level::debug;
     case LogLevel::Info:
-        return "Info";
+        return spdlog::level::info;
     case LogLevel::Warning:
-        return "Warning";
+        return spdlog::level::warn;
     case LogLevel::Error:
-        return "Error";
+        return spdlog::level::err;
     case LogLevel::Fatal:
-        return "Fatal";
+        return spdlog::level::critical;
     default:
-        return "Unknown";
-    }
-}
-
-[[nodiscard]] inline constexpr std::string_view LOG_LEVEL_COLOR(LogLevel lvl) noexcept
-{
-    switch (lvl)
-    {
-    case LogLevel::DebugPlusPlus:
-    case LogLevel::Debug:
-        return "\x1b[36m";
-    case LogLevel::Info:
-        return "";
-    case LogLevel::Warning:
-        return "\x1b[33m";
-    case LogLevel::Error:
-    case LogLevel::Fatal:
-        return "\x1b[31m";
-    default:
-        return "";
+        return spdlog::level::info;
     }
 }
 
@@ -112,91 +102,110 @@ inline constexpr std::string_view Reset = "\x1b[0m";
     return static_cast<unsigned>(lvl) >= static_cast<unsigned>(effective_log_level());
 }
 
-[[nodiscard]] inline constexpr std::string_view filename(std::string_view path) noexcept
+[[nodiscard]] inline std::shared_ptr<spdlog::logger> make_logger(std::string_view log_name)
 {
-    const auto slash = path.find_last_of("/\\");
-    return (slash == std::string_view::npos) ? path : path.substr(slash + 1);
-}
+    std::vector<spdlog::sink_ptr> sinks;
 
-inline void print_header(LogLevel lvl, const std::source_location& loc) noexcept
-{
-    std::printf("%.*s[%.*s:%.*s] [%.*s]", (int)LOG_LEVEL_COLOR(lvl).size(), LOG_LEVEL_COLOR(lvl).data(), (int)GG::Version::AppName.size(),
-        GG::Version::AppName.data(), (int)GG::Version::BuildName.size(), GG::Version::BuildName.data(),
-        (int)LOG_LEVEL_TO_STRING(lvl).size(), LOG_LEVEL_TO_STRING(lvl).data());
+    if (!log_name.empty())
+    {
+        const std::string filename = std::string(log_name) + ".log";
+        auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(filename, 5u * 1024u * 1024u, 5u, /*rotate_on_open=*/true);
+        sinks.push_back(std::move(file_sink));
+    }
+
+    if (g_console_enabled)
+    {
+        auto con_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+        sinks.push_back(std::move(con_sink));
+    }
+
+    if (sinks.empty())
+        return nullptr;
+
+    const std::string name = std::string(GG::Version::AppName) + ":" + std::string(GG::Version::BuildName);
+    auto logger = std::make_shared<spdlog::logger>(name, sinks.begin(), sinks.end());
+
+    logger->set_level(spdlog::level::trace);
 
     if constexpr (IsDebugBuild)
-    {
-        const auto fn = filename(loc.file_name());
-        std::printf(" [%.*s:%u] ", (int)fn.size(), fn.data(), loc.line());
-    }
+        logger->set_pattern("%^[%n] [%l]%$ [%s:%#] %v");
     else
-    {
-        (void)loc;
-        std::printf(" ");
-    }
-}
+        logger->set_pattern("%^[%n] [%l]%$ %v");
 
-inline void rotate_logs() noexcept
-{
-    static size_t s_line_count = 0;
-
-    if (++s_line_count < 5000)
-        return;
-
-    s_line_count = 0;
-    std::fflush(stdout);
-
-    std::remove("gg_server.log.5");
-
-    for (int i = 4; i >= 1; --i)
-    {
-        std::string old_name = "gg_server.log." + std::to_string(i);
-        std::string new_name = "gg_server.log." + std::to_string(i + 1);
-        std::rename(old_name.c_str(), new_name.c_str());
-    }
-
-    std::rename("gg_server.log", "gg_server.log.1");
-
-    FILE* dummy;
-    if (freopen_s(&dummy, "gg_server.log", "w", stdout) != 0)
-    {
-        std::printf("Warning: Failed to rotate log file\n");
-    }
-}
-
-template<class... Args>
-inline void vlogf(LogLevel lvl, const std::source_location& loc, const char* fmt, Args&&... args) noexcept
-{
-    if (!should_log(lvl))
-        return;
-
-    rotate_logs();
-
-    print_header(lvl, loc);
-    std::printf(fmt, std::forward<Args>(args)...);
-    std::printf("%.*s\n", (int)Reset.size(), Reset.data());
-    std::fflush(stdout);
-}
-
-inline void platform_fatal_dialog(const char* message) noexcept
-{
-    ::MessageBoxA(nullptr, message, "Fatal Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+    return logger;
 }
 
 [[noreturn]] inline void hard_abort() noexcept
 {
+    if (g_logger)
+        g_logger->flush();
     std::fflush(stdout);
 #if defined(_MSC_VER) && defined(_DEBUG)
     __debugbreak();
 #endif
     std::abort();
 }
-} // namespace detail
+
+inline void platform_fatal_dialog(const char* message) noexcept
+{
+    ::MessageBoxA(nullptr, message, "Fatal Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+}
+}
+
+inline void init()
+{
+    {
+        char env[2]{};
+        detail::g_console_enabled = GetEnvironmentVariableA("GG_CONSOLE", env, sizeof(env)) > 0;
+    }
+
+    if (detail::g_console_enabled)
+    {
+        AllocConsole();
+        SetConsoleTitleA(GG_CONSOLE_TITLE);
+        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+        DWORD mode = 0;
+        GetConsoleMode(hOut, &mode);
+        SetConsoleMode(hOut, mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+        SetConsoleOutputCP(CP_UTF8);
+    }
+
+    char log_name[256]{};
+    detail::g_logger = detail::make_logger(GetEnvironmentVariableA("GG_LOG", log_name, sizeof(log_name)) > 0 ? log_name : "");
+}
+
+inline void shutdown()
+{
+    if (detail::g_logger)
+        detail::g_logger->flush();
+    spdlog::shutdown();
+}
+
+[[nodiscard]] inline bool should_log(LogLevel lvl) noexcept
+{
+    return detail::should_log(lvl);
+}
+}
 
 template<class... Args>
 inline void logf(LogLevel lvl, const std::source_location& loc, const char* fmt, Args&&... args) noexcept
 {
-    detail::vlogf(lvl, loc, fmt, std::forward<Args>(args)...);
+    if (!Log::detail::g_logger || !Log::detail::should_log(lvl))
+        return;
+
+    char buf[8192]{};
+    std::snprintf(buf, sizeof(buf), fmt, std::forward<Args>(args)...);
+
+    if constexpr (Log::detail::IsDebugBuild)
+    {
+        Log::detail::g_logger->log(
+            spdlog::source_loc{ loc.file_name(), static_cast<int>(loc.line()), loc.function_name() }, Log::detail::to_spdlog(lvl), buf);
+    }
+    else
+    {
+        (void)loc;
+        Log::detail::g_logger->log(Log::detail::to_spdlog(lvl), buf);
+    }
 }
 
 template<class... Args>
@@ -205,12 +214,11 @@ template<class... Args>
     char buf[2048]{};
     std::snprintf(buf, sizeof(buf), fmt, std::forward<Args>(args)...);
 
-    detail::vlogf(LogLevel::Fatal, loc, "%s", buf);
-    detail::platform_fatal_dialog(buf);
-    detail::hard_abort();
+    logf(LogLevel::Fatal, loc, "%s", buf);
+    Log::detail::platform_fatal_dialog(buf);
+    Log::detail::hard_abort();
 }
-} // namespace GG
+}
 
 #define GG_LOG(level, fmt, ...) ::GG::logf((level), std::source_location::current(), (fmt), ##__VA_ARGS__)
-
 #define GG_FATAL(fmt, ...) ::GG::fatalf(std::source_location::current(), (fmt), ##__VA_ARGS__)

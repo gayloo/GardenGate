@@ -9,7 +9,13 @@ FetchContent_Declare(
   GIT_TAG 1e9ad1eb42db11bfcb65461f687c656612d1b555
 )
 
-FetchContent_MakeAvailable(minhook)
+FetchContent_Declare(
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG v1.15.1
+)
+
+FetchContent_MakeAvailable(minhook spdlog)
 
 add_library(${PROJECT_NAME} SHARED)
 
@@ -31,6 +37,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE
   "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+  SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE
+)
+
 # Warnings (Add back -Werror when those get fixed)
 target_compile_options(${PROJECT_NAME} PRIVATE
   $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
@@ -42,6 +52,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE
     ws2_32
     minhook
+    spdlog::spdlog
   )
 
 # Output

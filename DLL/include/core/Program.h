@@ -11,24 +11,17 @@ class Program
 public:
     void initialize()
     {
-        AllocConsole();
-        SetConsoleTitleA(GG_CONSOLE_TITLE);
-        freopen_s((FILE**)stdout, "gg_server.log", "w", stdout);
+        GG::Log::init();
 
-        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-        DWORD mode = 0;
-        GetConsoleMode(hOut, &mode);
-        SetConsoleMode(hOut, mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
-        SetConsoleOutputCP(CP_UTF8);
-
-        std::cout << GG::Version::Banner << std::endl;
+        GG_LOG(GG::LogLevel::Info, "%.*s", (int)GG::Version::Banner.size(), GG::Version::Banner.data());
         GG_LOG(GG::LogLevel::Info, GG_CONSOLE_TITLE);
     }
 
     void uninitialize()
     {
-        fclose((FILE*)stdout);
-        FreeConsole();
+        GG::Log::shutdown();
+        if (GG::Log::detail::g_console_enabled)
+            FreeConsole();
     }
 
     void run()
