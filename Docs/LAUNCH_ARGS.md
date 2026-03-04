@@ -51,7 +51,7 @@ Please keep in mind some args here are tied to the `dinput8.dll`
 You can switch between log levels by settings `GG_LOG_LEVEL` environment variable.
 
 ```
-DebugPlusPlus
+Debug++
 Debug
 Info
 Warning
