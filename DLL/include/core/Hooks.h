@@ -595,9 +595,34 @@ inline tUserAdded UserAdded = reinterpret_cast<tUserAdded>(offsets::gw3::fn_User
 using tSpawnServer = intptr_t(__fastcall*)(intptr_t, ServerSpawnInfo*);
 inline tSpawnServer SpawnServer = reinterpret_cast<tSpawnServer>(offsets::gw3::fn_SpawnServer);
 
+void initSettings()
+{
+    auto netObjectSettings = GetSettings<NetObjectSystemSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_NetObjectSettings);
+    netObjectSettings->MaxServerConnectionCount = 64;
+
+    auto serverSettings = GetSettings<PVZServerSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_PVZServerSettings);
+    serverSettings->KickIdlePlayers = false;
+
+    auto pvzOnlineSettings = GetSettings<PVZOnlineSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_PVZOnlineSettings);
+    pvzOnlineSettings->ShouldControlBlaze = false;
+    pvzOnlineSettings->ClientIsPresenceEnabled = false;
+    pvzOnlineSettings->ServerIsPresenceEnabled = false;
+    pvzOnlineSettings->ServerAllowAnyReputation = true;
+
+    auto gameModeSettings = GetSettings<GameModeSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_GameModeSettings);
+    gameModeSettings->ShouldSkipHUBTutorial = true;
+    gameModeSettings->SocialHUBSkipStationTutorials = true;
+    gameModeSettings->SocialHUBSkipLandingPage = true;
+    auto hubSeason = GetOptionParameter("GameModeSettings.ForceHUBSeason", "", 0);
+    if (hubSeason[0] != '\0')
+        gameModeSettings->ForceHUBSeason = atoi(hubSeason);
+}
+
 intptr_t ServerStart(intptr_t inst, ServerSpawnInfo& info, ServerSpawnOverrides* spawnOverrides, fb::ISocketManager* socketManager)
 {
     const auto trampoline = GG::HookManager::getManager().Call(&ServerStart);
+
+    initSettings();
 
     GG_LOG(GG::LogLevel::Debug, "fb::Server::start(inst:%p, info:%p, spawnOverrides:%p, socketManager:%p)", (intptr_t*)inst,
         (intptr_t*)&info, (intptr_t*)spawnOverrides, (intptr_t*)socketManager);
@@ -643,25 +668,6 @@ intptr_t ServerStart(intptr_t inst, ServerSpawnInfo& info, ServerSpawnOverrides*
         splash = true;
     }
 
-    auto netObjectSettings = GetSettings<NetObjectSystemSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_NetObjectSettings);
-    netObjectSettings->MaxServerConnectionCount = 64;
-
-    auto serverSettings = GetSettings<PVZServerSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_PVZServerSettings);
-    serverSettings->KickIdlePlayers = false;
-
-    auto pvzOnlineSettings = GetSettings<PVZOnlineSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_PVZOnlineSettings);
-    pvzOnlineSettings->ShouldControlBlaze = false;
-    pvzOnlineSettings->ClientIsPresenceEnabled = false;
-    pvzOnlineSettings->ServerIsPresenceEnabled = false;
-    pvzOnlineSettings->ServerAllowAnyReputation = true;
-
-    auto gameModeSettings = GetSettings<GameModeSettings>(offsets::gw3::g_SettingsManager, offsets::gw3::g_GameModeSettings);
-    gameModeSettings->ShouldSkipHUBTutorial = true;
-    gameModeSettings->SocialHUBSkipStationTutorials = true;
-    gameModeSettings->SocialHUBSkipLandingPage = true;
-    auto hubSeason = GetOptionParameter("GameModeSettings.ForceHUBSeason", "", 0);
-    if (hubSeason[0] != '\0')
-        gameModeSettings->ForceHUBSeason = atoi(hubSeason);
     return trampoline(inst, info, spawnOverrides, socketManager);
 }
 
@@ -730,6 +736,8 @@ intptr_t onEvent(intptr_t m_client, intptr_t event)
             *e = 0x4551EDBA;
             g_game->setJoining(true);
         }
+
+        initSettings();
 
         void* user = reinterpret_cast<void*>(g_game->getPrimaryUser());
         UserAdded(nullptr, &user, 0);
