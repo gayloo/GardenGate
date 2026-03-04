@@ -126,6 +126,7 @@ inline bool g_console_enabled = false;
     auto logger = std::make_shared<spdlog::logger>(name, sinks.begin(), sinks.end());
 
     logger->set_level(spdlog::level::trace);
+    logger->flush_on(spdlog::level::trace);
 
     if constexpr (IsDebugBuild)
         logger->set_pattern("%^[%n] [%l]%$ [%s:%#] %v");
