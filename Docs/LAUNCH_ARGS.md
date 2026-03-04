@@ -46,7 +46,13 @@ Please keep in mind some args here are tied to the `dinput8.dll`
 -GameModeSettings.ForceHUBSeason 0
 ```
 
-### Debug level
+## Logging
+
+### Console window
+
+You can toggle the console window via `GG_CONSOLE` environment variable.
+
+### Log level
 
 You can switch between log levels by settings `GG_LOG_LEVEL` environment variable.
 
@@ -58,3 +64,8 @@ Warning
 Error
 Fatal
 ```
+
+### Naming
+You can edit the prefix of the .log file by setting `GG_LOG` environment variable. It'll appear like so when you do;
+
+`GGLOGKEY.20380119_031407`
