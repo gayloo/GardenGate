@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdio>
 #include <cstdlib>
+#include <ctime>
 #include <memory>
 #include <source_location>
 #include <string>
@@ -14,7 +15,7 @@
 #include <windows.h>
 
 #include <spdlog/spdlog.h>
-#include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 #include "Platform.h"
@@ -108,8 +109,7 @@ inline bool g_console_enabled = false;
 
     if (!log_name.empty())
     {
-        const std::string filename = std::string(log_name) + ".log";
-        auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(filename, 5u * 1024u * 1024u, 5u, /*rotate_on_open=*/true);
+        auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(std::string(log_name), false);
         sinks.push_back(std::move(file_sink));
     }
 
@@ -171,7 +171,21 @@ inline void init()
     }
 
     char log_name[256]{};
-    detail::g_logger = detail::make_logger(GetEnvironmentVariableA("GG_LOG", log_name, sizeof(log_name)) > 0 ? log_name : "");
+    DWORD log_len = GetEnvironmentVariableA("GG_LOG", log_name, sizeof(log_name));
+    while (log_len > 0 && log_name[log_len - 1] == ' ')
+        log_name[--log_len] = '\0';
+
+    std::string log_path;
+    if (log_len > 0)
+    {
+        std::time_t now = std::time(nullptr);
+        std::tm tm{};
+        localtime_s(&tm, &now);
+        char ts[32]{};
+        std::strftime(ts, sizeof(ts), "%Y%m%d_%H%M%S", &tm);
+        log_path = std::string(log_name) + "." + ts + ".log";
+    }
+    detail::g_logger = detail::make_logger(log_path);
 }
 
 inline void shutdown()
