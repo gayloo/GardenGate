@@ -50,7 +50,7 @@ Please keep in mind some args here are tied to the `dinput8.dll`
 
 ### Console window
 
-You can toggle the console window via `GG_CONSOLE` environment variable.
+You can enable the console window by setting `GG_CONSOLE` environment variable to anything.
 
 ### Log level
 
