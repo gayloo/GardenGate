@@ -45,3 +45,16 @@ Please keep in mind some args here are tied to the `dinput8.dll`
 -NetObjectSystem.MaxServerConnectionCount 4
 -GameModeSettings.ForceHUBSeason 0
 ```
+
+### Debug level
+
+You can switch between log levels by settings `GG_LOG_LEVEL` environment variable.
+
+```
+DebugPlusPlus
+Debug
+Info
+Warning
+Error
+Fatal
+```
