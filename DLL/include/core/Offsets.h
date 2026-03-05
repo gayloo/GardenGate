@@ -80,6 +80,7 @@ DEFINE_PATCH(MemFreeBug, 0x140155F01, (std::array<std::uint8_t, 1>{ 0xEB }));
 DEFINE_PATCH(SkipStreamInstallInstallation, 0x14012CE0C, (std::array<std::uint8_t, 3>{ 0x90, 0x90, 0x90 }));
 DEFINE_PATCH(AllowCommandArgumentsAsOptions, 0x1401328DA, (std::array<std::uint8_t, 1>{ 0xE6 }));
 DEFINE_PATCH(PlayerNameFormatting, 0x1422DC782, (std::array<std::uint8_t, 3>{ 0x00, 0x00, 0x00 }));
+DEFINE_PATCH(InfiniteConsumables, 0x140d8ef3e, (std::array<std::uint8_t, 6>{ 0xBA, 0x41, 0x00, 0x00, 0x00, 0x90 }));
 } // namespace gw2
 
 namespace gw3

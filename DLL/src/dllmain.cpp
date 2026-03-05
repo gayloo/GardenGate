@@ -85,6 +85,7 @@ void Initialize()
         ApplyPatch(offsets::gw2::patch_PlayerNameFormatting);
         ApplyPatch(offsets::gw2::patch_SkipStreamInstallInstallation);
         ApplyPatch(offsets::gw2::patch_MemFreeBug);
+        ApplyPatch(offsets::gw2::patch_InfiniteConsumables);
     }
     else if (CheckGameId(offsets::gw3::g_AppId, "PvZGW3"))
     {
