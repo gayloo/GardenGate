@@ -65,3 +65,4 @@ Following open-source projects were used:
 - [MinHook](https://github.com/TsudaKageyu/minhook)
 - [Kyber](https://github.com/ArmchairDevelopers/Kyber)
 - [ImGui](https://github.com/ocornut/imgui)
+- [Spdlog](https://github.com/gabime/spdlog.git)
