@@ -332,6 +332,7 @@ intptr_t initSettings(intptr_t inst)
     networkSettings->MaxClientCount = 64;
     pvzServerSettings->KickIdlePlayers = false;
     gameModeSettings->SkipPreroundCountdown = true;
+    gameModeSettings->SkipIntroHubNIS = true;
 
     return ret;
 }
