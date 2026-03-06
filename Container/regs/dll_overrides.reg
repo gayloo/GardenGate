@@ -8,6 +8,7 @@ Windows Registry Editor Version 5.00
 
 [HKEY_CURRENT_USER\Software\Wine\AppDefaults\PVZ.Main_Win64_Retail.exe\DllOverrides]
 "dinput8"="native,builtin"
+"winmm"="native,builtin"
 
 [HKEY_CURRENT_USER\Software\Wine\AppDefaults\GW2.Main_Win64_Retail.exe\DllOverrides]
 "dinput8"="native,builtin"
@@ -15,3 +16,4 @@ Windows Registry Editor Version 5.00
 
 [HKEY_CURRENT_USER\Software\Wine\AppDefaults\PVZBattleforNeighborville.exe\DllOverrides]
 "dinput8"="native,builtin"
+"winmm"="native,builtin"

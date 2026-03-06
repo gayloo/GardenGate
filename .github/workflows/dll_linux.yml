@@ -1,7 +1,5 @@
 name: Build DLL (Linux)
 
-# This workflow is WIP. The dll generated from it will result in a crash when loading into a level regardless of the game.
-
 on:
   workflow_dispatch:
 
@@ -16,7 +14,7 @@ jobs:
       - name: Install base dependencies
         run: |
           pacman -Syu --noconfirm archlinux-keyring
-          pacman -Syu --noconfirm base-devel sudo git cmake extra-cmake-modules mingw-w64-binutils mingw-w64-crt mingw-w64-gcc mingw-w64-headers mingw-w64-winpthreads
+          pacman -Syu --noconfirm base-devel sudo git cmake extra-cmake-modules python wine msitools ca-certificates libwbclient
 
       - name: Create build user
         run: |
@@ -34,13 +32,14 @@ jobs:
           sudo -u builder sh <<'EOF'
           set -e
           cd DLL
-          mkdir build-gg
-          cd build-gg
-          sh -c "
-          cmake .. \
-            -DCMAKE_TOOLCHAIN_FILE=../toolchain-mingw64.cmake
-          "
-          cmake --build .
+          export WINE=$(command -v wine64 || command -v wine || false)
+          $WINE wineboot
+          git clone https://github.com/mstorsjo/msvc-wine
+          ./msvc-wine/vsdownload.py --accept-license --dest $(pwd)/my_msvc/opt/msvc
+          ./msvc-wine/install.sh $(pwd)/my_msvc/opt/msvc
+          export PATH=$(pwd)/my_msvc/opt/msvc/bin/x64:$PATH
+          CC=cl CXX=cl cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_SYSTEM_NAME=Windows
+          make
           EOF
 
       - name: Upload artifact/s
@@ -48,4 +47,4 @@ jobs:
         with:
           name: DLL
           path: |
-            DLL/build-gg/dinput8.dll
+            DLL/dinput8.dll
