@@ -14,6 +14,7 @@ public:
         GG::Log::init();
 
         GG_LOG(GG::LogLevel::Info, "%.*s", (int)GG::Version::Banner.size(), GG::Version::Banner.data());
+        GG_LOG(GG::LogLevel::Info, "Git commit: %.*s", (int)GG::Version::GitInfo.size(), GG::Version::GitInfo.data());
         GG_LOG(GG::LogLevel::Info, GG_CONSOLE_TITLE);
     }
 

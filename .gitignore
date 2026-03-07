@@ -304,6 +304,9 @@ __pycache__/
 *.exp
 *.cmakecache
 
+.ninja_deps
+.ninja_log
+build.ninja
 CMakeCache.txt
 Makefile
 CMakeFiles/
@@ -311,7 +314,6 @@ my_msvc/
 msvc-wine/
 _deps/
 cmake_install.cmake
-
 
 DLL/minhook/
 DLL/build/

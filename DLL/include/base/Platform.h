@@ -39,6 +39,8 @@ inline constexpr std::string_view AppName = GG_APP_NAME;
 inline constexpr std::string_view BuildName = GG_BUILD_NAME;
 inline constexpr std::string_view Version = GG_VERSION_STRING;
 inline constexpr std::string_view VersionFull = GG_VERSION_FULL_STRING;
+inline constexpr std::string_view GitInfo = GIT_HASH " (" GIT_DATE ")";
+
 inline constexpr std::string_view ConsoleTitle = GG_CONSOLE_TITLE;
 inline constexpr std::string_view Banner = R"(
 ░██████╗░░█████╗░██████╗░██████╗░███████╗███╗░░██╗░██████╗░░█████╗░████████╗███████╗
