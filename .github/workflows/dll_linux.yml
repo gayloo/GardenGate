@@ -14,7 +14,7 @@ jobs:
       - name: Install base dependencies
         run: |
           pacman -Syu --noconfirm archlinux-keyring
-          pacman -Syu --noconfirm base-devel sudo git clang ninja cmake extra-cmake-modules python wine msitools ca-certificates libwbclient
+          pacman -Syu --noconfirm base-devel sudo git clang lld ninja cmake extra-cmake-modules python wine msitools ca-certificates libwbclient
 
       - name: Create build user
         run: |
