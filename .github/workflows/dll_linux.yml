@@ -36,9 +36,9 @@ jobs:
           export WINE=$(command -v wine64 || command -v wine || false)
           $WINE wineboot
           git clone https://github.com/mstorsjo/msvc-wine
-          ./msvc-wine/vsdownload.py --accept-license --dest $(pwd)/my_msvc/opt/msvc
-          ./msvc-wine/install.sh $(pwd)/my_msvc/opt/msvc
-          export PATH=$(pwd)/my_msvc/opt/msvc/bin/x64:$PATH
+          ./msvc-wine/vsdownload.py --accept-license --dest $(pwd)/my_msvc
+          ./msvc-wine/install.sh $(pwd)/my_msvc
+          export PATH=$(pwd)/my_msvc/bin/x64:$PATH
           cmake . -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=./win_sdk.cmake
           ninja
           EOF
