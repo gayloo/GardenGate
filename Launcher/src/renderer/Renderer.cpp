@@ -163,7 +163,7 @@ void Renderer::Run()
         "GardenGateClass", nullptr };
     ::RegisterClassEx(&wc);
 
-    HWND hwnd = CreateWindow(wc.lpszClassName, "Garden Gate Launcher", WS_OVERLAPPEDWINDOW, xPos, yPos, windowWidth, windowHeight, NULL,
+    HWND hwnd = CreateWindow(wc.lpszClassName, "GardenGate Launcher", WS_OVERLAPPEDWINDOW, xPos, yPos, windowWidth, windowHeight, NULL,
         NULL, wc.hInstance, NULL);
 
     if (!CreateDeviceD3D(hwnd))
@@ -239,4 +239,5 @@ void Renderer::Run()
     CleanupDeviceD3D();
     ::DestroyWindow(hwnd);
     ::UnregisterClass(wc.lpszClassName, wc.hInstance);
+
 }
