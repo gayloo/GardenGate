@@ -425,7 +425,7 @@ struct GameModeSettings : SystemSettings
     unsigned int LocalPlayMaxBotsPerTeam;
     unsigned int LocalPlaySelectedAICharacterSetZombiesUnlockId;
     unsigned int LocalPlaySelectedAICharacterSetPlantsUnlockId;
-    void* TeamHighlightColors;
+    List<void*> TeamHighlightColors;
     char* CrazyOptionsDataPath;
     char* AvailableCostumes;
     float CrazyOption_TimeBomb_FullTimer;

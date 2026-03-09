@@ -108,3 +108,11 @@ public:
         reset();
     }
 };
+
+template<class T>
+struct List
+{
+    T* data;
+    int count;
+    int capacity;
+};
